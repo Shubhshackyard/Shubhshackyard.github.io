@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO & GitHub Pages meta -->
+<title>Blockchain Application Security — Interactive Learning Companion</title>
+<meta name="description" content="Interactive learning companion for 'Blockchain Application Security' by Morana, Singh & Piccoli (Wiley 2026). Chapter guides, glossary, quiz, and 4-week study roadmap.">
+<meta name="author" content="Shubhi Satvik">
+<link rel="canonical" href="https://shubhshackyard.github.io/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shubhshackyard.github.io/">
+<meta property="og:title" content="Blockchain Application Security — Learning Companion">
+<meta property="og:description" content="Interactive study guide: chapter deep-dives, 26-term glossary, 10-question quiz, and 4-week roadmap for Morana et al. (Wiley 2026).">
+<meta property="og:site_name" content="Shubhshackyard">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Blockchain Application Security — Learning Companion">
+<meta name="twitter:description" content="Interactive study guide for Morana et al. Blockchain Application Security (Wiley 2026).">
+
+<!-- Fonts — preconnect first to reduce latency on GitHub Pages -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── PDF Banner ─── */
+  .pdf-banner {
+    background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(0,212,255,0.10));
+    border-bottom: 1px solid rgba(0,212,255,0.2);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .pdf-banner-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+  }
+
+  .pdf-banner-text strong { color: var(--text); }
+
+  .pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--accent2);
+    background: rgba(124,58,237,0.15);
+    color: #a78bfa;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .pdf-btn:hover {
+    background: var(--accent2);
+    color: #fff;
+    border-color: var(--accent2);
+    box-shadow: 0 0 16px rgba(124,58,237,0.4);
+  }
+
+  .pdf-btn svg { flex-shrink: 0; }
+
+  /* ─── Header ─── */
+  header {
+    padding: 44px 0 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-size: clamp(26px, 4.5vw, 42px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    font-family: var(--mono);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  .github-link:hover { color: var(--text); border-color: var(--accent); }
+
+  /* ─── Tabs ─── */
+  .mode-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .tab-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  /* ─── Panels ─── */
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Stat cards ─── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .stat-card .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .stat-card .value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .stat-card .desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ─── Info cards ─── */
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+  }
+
+  .info-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .info-card p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #94a3b8;
+  }
+
+  .info-card p strong { color: var(--text); }
+
+  .takeaway-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .takeaway-list li {
+    font-size: 13px;
+    color: #94a3b8;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: 6px;
+    line-height: 1.6;
+  }
+
+  .takeaway-list li strong { color: var(--text); }
+
+  /* ─── Chapter cards ─── */
+  .chapter-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .chapter-card:hover    { border-color: var(--accent2); transform: translateX(3px); }
+  .chapter-card.expanded { border-color: var(--accent2); }
+
+  .chapter-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .ch-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .ch-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.3;
+  }
+
+  .ch-pages {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .ch-arrow {
+    color: var(--muted);
+    font-size: 18px;
+    transition: transform 0.2s;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .chapter-card.expanded .ch-arrow { transform: rotate(90deg); }
+
+  .chapter-body {
+    display: none;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .chapter-card.expanded .chapter-body { display: block; }
+
+  .section-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+
+  .section-list li {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 10px;
+    background: var(--surface2);
+    border-radius: 4px;
+    border-left: 2px solid var(--accent3);
+    transition: color 0.15s;
+  }
+
+  .section-list li:hover { color: var(--text); }
+
+  .ch-summary {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #94a3b8;
+    margin-bottom: 14px;
+  }
+
+  /* ─── Tags ─── */
+  .key-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+
+  .tag-blue   { color: var(--accent);  border-color: rgba(0,212,255,0.3);   background: rgba(0,212,255,0.05); }
+  .tag-purple { color: #a78bfa;        border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.05); }
+  .tag-green  { color: var(--accent3); border-color: rgba(16,185,129,0.3);  background: rgba(16,185,129,0.05); }
+  .tag-orange { color: var(--warn);    border-color: rgba(245,158,11,0.3);  background: rgba(245,158,11,0.05); }
+  .tag-red    { color: var(--danger);  border-color: rgba(239,68,68,0.3);   background: rgba(239,68,68,0.05); }
+
+  /* ─── Glossary ─── */
+  .search-bar {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    outline: none;
+    margin-bottom: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .search-bar:focus { border-color: var(--accent); }
+  .search-bar::placeholder { color: var(--muted); }
+
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 12px;
+  }
+
+  .glossary-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 15px 16px;
+    transition: border-color 0.2s;
+  }
+
+  .glossary-item:hover { border-color: var(--accent3); }
+  .glossary-item.hidden { display: none; }
+
+  .g-term {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .g-def {
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.6;
+  }
+
+  /* ─── Quiz ─── */
+  .score-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .score-item { text-align: center; }
+  .score-num  { font-size: 26px; font-weight: 800; color: var(--accent); font-family: var(--mono); }
+  .score-lbl  { font-size: 10px; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .quiz-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+
+  .q-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .q-text {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+
+  .q-options { display: grid; gap: 9px; }
+
+  .q-option {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 11px 15px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #94a3b8;
+    font-family: var(--sans);
+    transition: all 0.2s;
+    text-align: left;
+  }
+
+  .q-option:hover:not(:disabled) { border-color: var(--accent2); color: var(--text); }
+  .q-option.correct { border-color: var(--accent3); color: var(--accent3); background: rgba(16,185,129,0.08); }
+  .q-option.wrong   { border-color: var(--danger);  color: var(--danger);  background: rgba(239,68,68,0.08); }
+  .q-option:disabled { cursor: default; }
+
+  .q-explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 13px 15px;
+    background: rgba(0,212,255,0.05);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.7;
+  }
+
+  .q-explanation.show { display: block; animation: fadeIn 0.3s; }
+
+  /* ─── Buttons ─── */
+  .btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 9px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* ─── Roadmap ─── */
+  .roadmap {
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2));
+  }
+
+  .roadmap-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .roadmap-dot {
+    position: absolute;
+    left: -26px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    transition: background 0.2s;
+  }
+
+  .roadmap-item.active-item .roadmap-dot {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  .roadmap-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .roadmap-item.active-item .roadmap-card { border-color: rgba(0,212,255,0.3); }
+
+  .roadmap-week {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .roadmap-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .roadmap-topics {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.75;
+  }
+
+  .roadmap-topics strong { color: var(--accent); }
+  .roadmap-topics .accent2 { color: var(--accent2); }
+
+  /* ─── Footer ─── */
+  footer {
+    margin-top: 60px;
+    padding: 22px 0 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-link {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .footer-link:hover { color: var(--accent); }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 600px) {
+    .pdf-banner { gap: 8px; padding: 8px 16px; }
+    header { padding: 28px 0 22px; }
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .section-list { grid-template-columns: 1fr; }
+    .glossary-grid { grid-template-columns: 1fr; }
+    .score-bar { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Sticky PDF Banner ─── -->
+<div class="pdf-banner">
+  <span class="pdf-banner-text"><strong>Blockchain Application Security</strong> · Morana, Singh & Piccoli · Wiley 2026</span>
+  <a class="pdf-btn"
+     href="https://github.com/Shubhshackyard/Shubhshackyard.github.io/blob/main/Morana%20M.%20Blockchain%20Application%20Security.%20How%20to%20Design...2026.pdf"
+     target="_blank" rel="noopener noreferrer">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="18" x2="12" y2="12"/>
+      <polyline points="9 15 12 18 15 15"/>
+    </svg>
+    View PDF on GitHub
+  </a>
+</div>
+
+<div class="container">
+
+  <!-- ─── Header ─── -->
+  <header>
+    <div class="header-top">
+      <div>
+        <div class="badge">Interactive Learning Companion</div>
+        <h1>Blockchain Application Security</h1>
+        <div class="subtitle">
+          Morana · Singh · Piccoli — Wiley, 2026 · 641 pages · 4 chapters + 9 appendices<br>
+          How to Design Secure and Attack-Resilient Blockchain Applications
+        </div>
+      </div>
+      <a class="github-link"
+         href="https://github.com/Shubhshackyard/Shubhshackyard.github.io"
+         target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+        GitHub Repo
+      </a>
+    </div>
+  </header>
+
+  <!-- ─── Tab Nav ─── -->
+  <div class="mode-tabs" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true"  onclick="switchTab('overview','this')" id="tab-overview">📚 Overview</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('chapters','this')" id="tab-chapters">🗂 Chapters</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('glossary','this')" id="tab-glossary">🔑 Glossary</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('quiz','this')"     id="tab-quiz">⚡ Quiz</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('roadmap','this')" id="tab-roadmap">🗺 Study Roadmap</button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PANEL: OVERVIEW
+  ══════════════════════════════════════ -->
+  <div id="panel-overview" class="panel active" role="tabpanel">
+
+    <div class="overview-grid">
+      <div class="stat-card">
+        <div class="label">Total Pages</div>
+        <div class="value">641</div>
+        <div class="desc">4 core chapters + 9 appendices</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Primary Focus</div>
+        <div class="value" style="font-size:17px;color:var(--accent2)">dApp Security</div>
+        <div class="desc">Design, threat model, audit, deploy</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Key Framework</div>
+        <div class="value" style="font-size:17px;color:var(--accent3)">PASTA</div>
+        <div class="desc">Process for Attack Simulation &amp; Threat Analysis</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Authors</div>
+        <div class="value" style="font-size:16px;color:var(--warn)">3 Experts</div>
+        <div class="desc">Marco Morana · Harpreet Singh · Francesco Piccoli</div>
+      </div>
+    </div>
+
+    <div class="info-card" style="border-color:rgba(0,212,255,0.25)">
+      <div class="info-card-title" style="color:var(--accent)">📖 What This Book Is About</div>
+      <p>
+        A practical, risk-centric guide to securing blockchain applications — specifically <strong>decentralised applications (dApps)</strong>. It bridges the gap between blockchain fundamentals and real-world security engineering: cryptographic primitives, consensus algorithms, smart contract vulnerabilities, DeFi exploit case studies, and full threat-modelling walkthroughs. Security is treated not as an afterthought but as an architectural requirement baked into every design decision.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">🎯 Who Should Read This</div>
+      <div class="key-concepts">
+        <span class="tag tag-blue">Blockchain Developers</span>
+        <span class="tag tag-purple">Security Architects</span>
+        <span class="tag tag-green">Smart Contract Auditors</span>
+        <span class="tag tag-orange">DevSecOps Engineers</span>
+        <span class="tag tag-red">Penetration Testers</span>
+        <span class="tag tag-blue">dApp Designers</span>
+        <span class="tag tag-purple">Web3 Builders</span>
+        <span class="tag tag-green">CTOs / Field CISOs</span>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">⚡ Key Takeaways</div>
+      <ul class="takeaway-list">
+        <li style="border-left:3px solid var(--accent)"><strong>Decentralisation doesn't eliminate risk</strong> — it spreads it across smart contracts, wallets, oracles, bridges, and consensus mechanisms</li>
+        <li style="border-left:3px solid var(--accent2)"><strong>Security-by-design is not optional</strong> — architecture decisions made early determine exploitability forever (code is immutable on-chain)</li>
+        <li style="border-left:3px solid var(--accent3)"><strong>PASTA threat modelling</strong> provides a 7-stage structured process to identify, analyse, and mitigate blockchain-specific threats</li>
+        <li style="border-left:3px solid var(--warn)"><strong>Real attack case studies</strong> — the 2016 DAO hack, DeFi exploits, wallet drains — show exactly how theory translates to loss of funds</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PANEL: CHAPTERS
+  ══════════════════════════════════════ -->
+  <div id="panel-chapters" class="panel" role="tabpanel">
+
+    <div class="chapter-card" onclick="toggleChapter(this)">
+      <div class="chapter-header">
+        <div class="ch-num">Ch. 1</div>
+        <div style="flex:1">
+          <div class="ch-title">The Blockchain Technology Primer</div>
+          <div class="ch-pages">Pages 1–119 · 14 sections</div>
+        </div>
+        <div class="ch-arrow">›</div>
+      </div>
+      <div class="chapter-body">
+        <p class="ch-summary">Your foundation. Covers DLT vs blockchain, node types (full, light, validator, archive), scalability layers (L1/L2, sharding, payment channels), hash functions (SHA-256, Keccak-256), digital signatures (ECDSA, EdDSA), Merkle trees, consensus algorithms (PoW, PoS, DPoS, PBFT, Raft), cryptocurrencies, digital wallets (hot/cold/hardware), smart contracts, token transactions, privacy techniques (zero-knowledge proofs, ring signatures, stealth addresses), DIDs, and the legal/regulatory landscape.</p>
+        <ul class="section-list">
+          <li>1.2 History of Blockchain</li><li>1.3 DLT and Blockchain</li>
+          <li>1.4 Blockchain Networks</li><li>1.5 Data Structure</li>
+          <li>1.5.1 Hash Functions</li><li>1.5.2 Digital Signatures</li>
+          <li>1.5.3 Block Structure</li><li>1.5.4 Merkle Trees</li>
+          <li>1.5.6 Inherent Security Risks</li><li>1.6 Consensus Algorithms</li>
+          <li>1.7 Cryptocurrencies</li><li>1.8 Digital Wallets</li>
+          <li>1.10 Privacy Controls</li><li>1.11 Identity Controls &amp; DIDs</li>
+        </ul>
+        <div class="key-concepts">
+          <span class="tag tag-blue">SHA-256</span><span class="tag tag-blue">ECDSA</span>
+          <span class="tag tag-blue">Merkle Trees</span><span class="tag tag-purple">PoW / PoS</span>
+          <span class="tag tag-purple">PBFT</span><span class="tag tag-green">Zero-Knowledge Proofs</span>
+          <span class="tag tag-green">DIDs</span><span class="tag tag-orange">51% Attack</span>
+          <span class="tag tag-red">Sybil Attack</span><span class="tag tag-orange">Eclipse Attack</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card" onclick="toggleChapter(this)">
+      <div class="chapter-header">
+        <div class="ch-num">Ch. 2</div>
+        <div style="flex:1">
+          <div class="ch-title">Designing Secure Decentralised Applications</div>
+          <div class="ch-pages">Pages 121–267 · 10 major sections</div>
+        </div>
+        <div class="ch-arrow">›</div>
+      </div>
+      <div class="chapter-body">
+        <p class="ch-summary">The design-phase security chapter. Covers dApp architectures (frontend, smart contracts, oracles, wallets), security requirements elicitation, secure design principles, securing APIs (OWASP API Top 10 for blockchain), protecting secrets and private keys, consensus algorithm vulnerabilities, token standards (ERC-20, ERC-721, ERC-1155), DEX integration security, DID security, and comprehensive smart contract security — reentrancy, integer overflow, access control, flash loan attacks. Every subsection pairs vulnerability identification with mitigation best practices.</p>
+        <ul class="section-list">
+          <li>2.2 dApp Architectures</li><li>2.3 Security Requirements</li>
+          <li>2.4.1 Secure Design Principles</li><li>2.4.2 Securing by Design</li>
+          <li>2.4.3 Blockchain APIs</li><li>2.4.4 Confidential Data</li>
+          <li>2.4.5 Consensus Security</li><li>2.4.6 Key Management</li>
+          <li>2.4.7–8 Token &amp; DEX Security</li><li>2.4.10 Smart Contracts</li>
+        </ul>
+        <div class="key-concepts">
+          <span class="tag tag-red">Reentrancy</span><span class="tag tag-red">Flash Loan Attacks</span>
+          <span class="tag tag-orange">Front-Running</span><span class="tag tag-orange">API Vulnerabilities</span>
+          <span class="tag tag-blue">ERC-20 / ERC-721</span><span class="tag tag-purple">Key Management</span>
+          <span class="tag tag-green">Security-by-Design</span><span class="tag tag-green">Checks-Effects-Interactions</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card" onclick="toggleChapter(this)">
+      <div class="chapter-header">
+        <div class="ch-num">Ch. 3</div>
+        <div style="flex:1">
+          <div class="ch-title">Mitigating Blockchain Vulnerabilities</div>
+          <div class="ch-pages">Pages 269–459 · Largest chapter (~190 pages)</div>
+        </div>
+        <div class="ch-arrow">›</div>
+      </div>
+      <div class="chapter-body">
+        <p class="ch-summary">The intellectual core of the book. Introduces PASTA (Process for Attack Simulation and Threat Analysis) and applies all 7 stages exhaustively to a real DeFi lending/borrowing dApp case study — including full threat matrices, attack trees, vulnerability scoring (CVSS), risk registers, and mitigation plans. Also covers real incidents (DAO hack, wallet breaches), security-driven tooling (Slither, Mythril, Echidna, formal verification), and compliance/audit frameworks.</p>
+        <ul class="section-list">
+          <li>3.1.3 Security Incidents &amp; Lessons</li><li>3.2.1 Intro to Threat Modelling</li>
+          <li>3.2.2 PASTA Framework (7 Stages)</li><li>Stage I: Business Objectives</li>
+          <li>Stage II: Technical Scope</li><li>Stage III: App Decomposition</li>
+          <li>Stage IV: Threat Analysis</li><li>Stage V: Vulnerability Analysis</li>
+          <li>Stage VI: Attack Modelling</li><li>Stage VII: Risk Management</li>
+          <li>3.2.4 Security-Driven Tools</li><li>3.3 Compliance Auditing</li>
+        </ul>
+        <div class="key-concepts">
+          <span class="tag tag-purple">PASTA Methodology</span><span class="tag tag-red">DeFi Exploit Analysis</span>
+          <span class="tag tag-orange">STRIDE / DREAD</span><span class="tag tag-blue">Attack Trees</span>
+          <span class="tag tag-green">Slither / Mythril</span><span class="tag tag-green">Formal Verification</span>
+          <span class="tag tag-orange">CVSS Scoring</span><span class="tag tag-blue">Risk Registers</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card" onclick="toggleChapter(this)">
+      <div class="chapter-header">
+        <div class="ch-num">Ch. 4</div>
+        <div style="flex:1">
+          <div class="ch-title">Securing Blockchain Applications: Practical Examples</div>
+          <div class="ch-pages">Pages 461–495 · Hands-on capstone</div>
+        </div>
+        <div class="ch-arrow">›</div>
+      </div>
+      <div class="chapter-body">
+        <p class="ch-summary">Hands-on implementation. Builds a complete ERC-20 dApp on AWS (Token.sol → Lambda → API Gateway → React frontend), then performs a layer-by-layer security review. Followed by comprehensive auditing tutorials covering smart contract vulnerabilities, automated tools (Slither, Mythril, Echidna), node software auditing, wallet security auditing, and full dApp audit methodology. Ends with a reporting framework and responsible disclosure best practices.</p>
+        <ul class="section-list">
+          <li>4.2 dApp Creation (ERC-20 + AWS)</li><li>4.2.3 API Gateway Setup</li>
+          <li>4.2.4 React Frontend</li><li>4.2.5 Security Review</li>
+          <li>4.3.3.1 Reentrancy Audit</li><li>4.3.3.2 Integer Over/Underflow</li>
+          <li>4.3.3.3 DoS Patterns</li><li>4.3.3.4 Access Control</li>
+          <li>4.3.4 Audit Tools</li><li>4.3.6–8 Node/Wallet/dApp Audit</li>
+        </ul>
+        <div class="key-concepts">
+          <span class="tag tag-blue">Solidity / ERC-20</span><span class="tag tag-blue">AWS Lambda</span>
+          <span class="tag tag-green">Slither</span><span class="tag tag-green">Mythril</span>
+          <span class="tag tag-green">Echidna (Fuzzing)</span><span class="tag tag-orange">Formal Verification</span>
+          <span class="tag tag-purple">Audit Reporting</span><span class="tag tag-red">Reentrancy Guard</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appendices quick-ref -->
+    <div class="info-card" style="margin-top:8px;">
+      <div class="info-card-title">📎 Appendices Quick Reference (A–I)</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:10px;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">A · Threat Modelling Matrix</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">B · Threat → Weaknesses Mapping</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">C · Threat → Attack Paths</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">D · Attack Simulation Tests</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">E · Weakness Risk Ratings</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">F · Risks Mitigation Plan</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">G · Threats Risk Register</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">H · Attack Simulation Report</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:7px 10px;background:var(--surface2);border-radius:4px;border-left:2px solid var(--accent2)">I · Risk Analysis Report</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PANEL: GLOSSARY
+  ══════════════════════════════════════ -->
+  <div id="panel-glossary" class="panel" role="tabpanel">
+    <input type="text" class="search-bar" placeholder="Search terms… (e.g. reentrancy, PASTA, oracle, Merkle)" oninput="filterGlossary(this.value)" aria-label="Search glossary">
+    <div class="glossary-grid" id="glossary-grid"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PANEL: QUIZ
+  ══════════════════════════════════════ -->
+  <div id="panel-quiz" class="panel" role="tabpanel">
+    <div class="score-bar">
+      <div class="score-item">
+        <div class="score-num" id="score-correct">0</div>
+        <div class="score-lbl">Correct</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" id="score-total">0</div>
+        <div class="score-lbl">Answered</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" id="score-pct">—</div>
+        <div class="score-lbl">Score</div>
+      </div>
+      <div style="flex:1"></div>
+      <button class="btn" onclick="resetQuiz()">↺ Reset Quiz</button>
+    </div>
+    <div id="quiz-container"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PANEL: ROADMAP
+  ══════════════════════════════════════ -->
+  <div id="panel-roadmap" class="panel" role="tabpanel">
+
+    <div class="info-card" style="margin-bottom:24px;">
+      <p>A suggested <strong>4-week self-study plan</strong> for working through this 641-page book. Adjust pace to your existing blockchain and security background. Each week builds on the previous.</p>
+    </div>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item active-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-card">
+          <div class="roadmap-week">Week 1 — Chapter 1</div>
+          <div class="roadmap-title">Blockchain Foundations &amp; Cryptography</div>
+          <div class="roadmap-topics">
+            Read §1.1–1.6: DLT basics, node types, hash functions (SHA-256, Keccak), ECDSA signatures, Merkle trees, block structure, then §1.6 consensus algorithms — understand PoW, PoS, and BFT variants.<br><br>
+            <strong>Practice:</strong> Draw a Merkle tree by hand. Explain how PoS differs from PoW in terms of security assumptions.<br>
+            <strong>Key section:</strong> §1.5.6 — Inherent Security Risks of Blockchain Technology.
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-card">
+          <div class="roadmap-week">Week 2 — Chapter 1 (cont.) + Chapter 2 start</div>
+          <div class="roadmap-title">Wallets, Transactions, Privacy &amp; dApp Architectures</div>
+          <div class="roadmap-topics">
+            Complete Ch. 1: §1.7–1.12 — cryptocurrencies, wallet types, smart contracts, token transactions, ZK proofs, DIDs, regulatory landscape. Then begin Ch. 2: §2.1–2.3 on dApp architectures and security requirements elicitation.<br><br>
+            <strong>Practice:</strong> List security requirements for a hypothetical NFT marketplace. Categorise them (confidentiality, integrity, availability, non-repudiation).<br>
+            <strong>Focus concept:</strong> How DIDs differ from centralised identity systems.
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-card">
+          <div class="roadmap-week">Week 3 — Chapter 2 (finish) + Chapter 3</div>
+          <div class="roadmap-title">Secure Design Patterns + PASTA Threat Modelling</div>
+          <div class="roadmap-topics">
+            Finish Ch. 2: §2.4 in full — secure design, API security, key management, token standards, DEX security, smart contract vulnerabilities (reentrancy, flash loans, access control).<br>
+            Then Ch. 3: §3.1 incident case studies, PASTA 7-stage model (§3.2.2), and trace the DeFi case study (§3.2.3) stage by stage.<br><br>
+            <strong>Practice:</strong> Apply PASTA Stage I–III to a simple voting dApp.<br>
+            <strong>Key appendices:</strong> A (Threat Matrix), C (Attack Paths), G (Risk Register).
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-card">
+          <div class="roadmap-week">Week 4 — Chapter 4 + Appendices</div>
+          <div class="roadmap-title">Practical Auditing + Hands-On Implementation</div>
+          <div class="roadmap-topics">
+            Work through Ch. 4: build the ERC-20 + AWS example, then review each security layer. Read §4.3 auditing methodology — smart contracts, nodes, wallets, full dApps.<br>
+            Review appendices D (Attack Simulation Tests), H (Simulation Report), I (Risk Analysis Report).<br><br>
+            <strong>Capstone:</strong> Find an open-source Solidity contract on GitHub. Run Slither. Identify one real vulnerability using patterns from the book.<br>
+            <strong>Tools to install:</strong> Slither, Mythril, Echidna, Hardhat, Foundry, Remix IDE.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="info-card" style="margin-top:20px;">
+      <div class="info-card-title" style="color:var(--accent3)">🛠 Recommended Toolchain</div>
+      <div class="key-concepts" style="margin-top:0">
+        <span class="tag tag-green">Slither (Trail of Bits)</span>
+        <span class="tag tag-green">Mythril</span>
+        <span class="tag tag-green">Echidna (Fuzzing)</span>
+        <span class="tag tag-blue">Hardhat</span>
+        <span class="tag tag-blue">Foundry</span>
+        <span class="tag tag-blue">Remix IDE</span>
+        <span class="tag tag-purple">OpenZeppelin Contracts</span>
+        <span class="tag tag-orange">Ganache (local chain)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <span class="footer-text">Blockchain Application Security · Learning Companion · shubhshackyard.github.io</span>
+    <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <a class="footer-link"
+         href="https://github.com/Shubhshackyard/Shubhshackyard.github.io/blob/main/Morana%20M.%20Blockchain%20Application%20Security.%20How%20to%20Design...2026.pdf"
+         target="_blank" rel="noopener noreferrer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        PDF on GitHub
+      </a>
+      <a class="footer-link"
+         href="https://github.com/Shubhshackyard/Shubhshackyard.github.io"
+         target="_blank" rel="noopener noreferrer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+        View Source
+      </a>
+    </div>
+  </footer>
+
+</div><!-- /container -->
+
+<script>
+/* ─── Tab switching ─── */
+function switchTab(id, _btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('panel-' + id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('tab-' + id).setAttribute('aria-selected','true');
+  if (id === 'glossary') renderGlossary();
+  if (id === 'quiz')     renderQuiz();
+}
+
+/* ─── Chapter accordion ─── */
+function toggleChapter(el) { el.classList.toggle('expanded'); }
+
+/* ─── Glossary ─── */
+const glossaryData = [
+  { term:"dApp",           def:"Decentralised Application — runs on a blockchain network with logic in smart contracts and no central point of control." },
+  { term:"Smart Contract", def:"Self-executing code stored on-chain. Once deployed it is immutable — bugs cannot be patched without redeployment to a new address." },
+  { term:"Reentrancy",     def:"A smart contract vulnerability where an external call re-enters the calling contract before its state is updated, enabling recursive fund drainage (e.g., the 2016 DAO hack)." },
+  { term:"PASTA",          def:"Process for Attack Simulation and Threat Analysis — a 7-stage risk-centric threat modelling framework. Chapters 3 applies all stages to a DeFi dApp." },
+  { term:"Merkle Tree",    def:"A binary hash tree where each leaf is a transaction hash and each parent is the hash of its children. Used to verify transaction inclusion without downloading the full block." },
+  { term:"Consensus Algorithm", def:"The protocol by which distributed nodes agree on the canonical state of the ledger. Examples: PoW, PoS, PBFT, Raft, DPoS." },
+  { term:"51% Attack",     def:"When a single entity controls >50% of mining/staking power and can rewrite recent transaction history or double-spend." },
+  { term:"Oracle",         def:"An off-chain data provider that feeds real-world information (prices, events) to smart contracts. A primary DeFi attack surface since oracles are not natively trustless." },
+  { term:"Flash Loan Attack", def:"A DeFi exploit borrowing large uncollateralised sums within a single transaction to manipulate on-chain prices or drain liquidity pools." },
+  { term:"Front-Running",  def:"A miner or bot sees a pending transaction in the mempool and inserts their own transaction first (higher gas) to exploit the information advantage." },
+  { term:"ERC-20",         def:"The Ethereum fungible token standard — defines transfer(), approve(), and allowance(). Vulnerabilities include approve/transferFrom race conditions." },
+  { term:"ERC-721",        def:"Ethereum non-fungible token (NFT) standard — each token has a unique ID. Used in digital art, gaming, and on-chain ownership certificates." },
+  { term:"DID",            def:"Decentralised Identifier — a self-sovereign identifier not dependent on any central authority, enabling privacy-preserving identity verification." },
+  { term:"Zero-Knowledge Proof", def:"A cryptographic method allowing one party to prove they know a value without revealing it. Used for privacy-preserving transactions (zk-SNARKs, zk-STARKs)." },
+  { term:"ECDSA",          def:"Elliptic Curve Digital Signature Algorithm — used by Bitcoin and Ethereum to sign transactions, proving private key ownership without revealing the key." },
+  { term:"Sybil Attack",   def:"An attacker creates many fake identities (nodes) to gain disproportionate influence in a P2P network, disrupting consensus or reputation systems." },
+  { term:"Slither",        def:"A Solidity static analysis framework by Trail of Bits that detects reentrancy, unchecked return values, tainted variables, and more in seconds." },
+  { term:"Mythril",        def:"A symbolic execution tool for EVM bytecode that explores execution paths to find integer overflows, reentrancy, dangerous delegatecall, and more." },
+  { term:"Echidna",        def:"Trail of Bits' property-based fuzzer for Solidity — generates random inputs to violate user-defined invariants and uncover edge-case bugs." },
+  { term:"Formal Verification", def:"Mathematically proving that a smart contract behaves according to its specification under all possible inputs — the highest assurance level available." },
+  { term:"PBFT",           def:"Practical Byzantine Fault Tolerance — a deterministic consensus algorithm tolerant of up to 1/3 malicious nodes. Used in permissioned chains (Hyperledger Fabric)." },
+  { term:"Integer Overflow", def:"In Solidity <0.8.0, arithmetic silently wraps around. Uint8 at 255 + 1 = 0. Mitigated by SafeMath library or Solidity ≥0.8.0 built-in overflow checks." },
+  { term:"Access Control", def:"Restricting which addresses can call which contract functions. Missing access control is a top-ranked vulnerability — any user can call admin-only functions." },
+  { term:"DEX",            def:"Decentralised Exchange — a protocol (Uniswap, Curve) for trustless token swaps via liquidity pools and automated market makers (AMMs), no custodian required." },
+  { term:"Hot Wallet",     def:"A digital wallet connected to the internet. Convenient for frequent use but a higher-risk surface due to exposure to remote attacks." },
+  { term:"Cold Wallet",    def:"Offline storage of private keys (hardware wallet like Ledger, or paper wallet). Safer from remote attacks but vulnerable to physical theft or loss." },
+  { term:"Gas Griefing",   def:"A DoS pattern where a malicious contract's fallback function consumes all forwarded gas, causing the calling contract's transaction to revert." },
+  { term:"Checks-Effects-Interactions", def:"A Solidity design pattern: (1) validate conditions, (2) update state variables, (3) make external calls last. The primary defence against reentrancy attacks." },
+  { term:"MEV",            def:"Miner/Maximal Extractable Value — profit extracted by reordering, inserting, or censoring transactions within a block. Includes front-running and sandwich attacks." },
+];
+
+let glossaryRendered = false;
+function renderGlossary() {
+  if (glossaryRendered) return;
+  const grid = document.getElementById('glossary-grid');
+  grid.innerHTML = glossaryData.map(item => `
+    <div class="glossary-item" data-search="${(item.term + ' ' + item.def).toLowerCase()}">
+      <div class="g-term">${item.term}</div>
+      <div class="g-def">${item.def}</div>
+    </div>
+  `).join('');
+  glossaryRendered = true;
+}
+
+function filterGlossary(q) {
+  if (!glossaryRendered) renderGlossary();
+  q = q.toLowerCase().trim();
+  document.querySelectorAll('.glossary-item').forEach(el => {
+    el.classList.toggle('hidden', q.length > 0 && !el.dataset.search.includes(q));
+  });
+}
+
+/* ─── Quiz ─── */
+const questions = [
+  { ch:"Ch. 1", q:"In a Merkle tree, what does the root hash represent?",
+    options:["The hash of the most recent transaction","A cryptographic summary of all transactions in a block","The private key of the block validator","The nonce used in PoW mining"],
+    answer:1, exp:"The Merkle root is derived by hashing pairs of transaction hashes recursively up the tree. Changing any single transaction changes the root, making tampering immediately detectable. Light clients use Merkle proofs to verify transactions without downloading the full block." },
+  { ch:"Ch. 1", q:"Which attack involves an adversary controlling more than half of a blockchain's computational or staking power?",
+    options:["Sybil Attack","Eclipse Attack","51% Attack","Front-Running Attack"],
+    answer:2, exp:"A 51% attack lets the majority actor reorganise recent blocks, enabling double-spends and censorship. It's more feasible on small PoW chains (low hash rate). PoS chains have analogous vulnerabilities around stake concentration." },
+  { ch:"Ch. 1", q:"What distinguishes a DID (Decentralised Identifier) from a traditional identity credential?",
+    options:["DIDs require a government-issued document","DIDs are controlled by a central authority","DIDs are self-sovereign — controlled by the user without any central registry","DIDs are only usable on the Ethereum blockchain"],
+    answer:2, exp:"DIDs are anchored on a blockchain or DLT, meaning no central party can revoke or alter them without the holder's consent. They enable self-sovereign identity (SSI) and privacy-preserving authentication without username/password pairs." },
+  { ch:"Ch. 2", q:"The 2016 DAO hack exploited which smart contract vulnerability?",
+    options:["Integer overflow in token balance","Reentrancy — withdraw() was called recursively before state was updated","A missing require() check on access control","Front-running via mempool observation"],
+    answer:1, exp:"The attacker called withdraw(), which sent ETH before updating the balance. Their fallback function called withdraw() again recursively, draining ~$50M. The fix: use the Checks-Effects-Interactions pattern — update state BEFORE making any external calls." },
+  { ch:"Ch. 2", q:"In Solidity versions before 0.8.0, what happens when a uint8 variable at 255 has 1 added to it?",
+    options:["An exception is thrown","The value becomes 256","The value wraps around to 0 (integer overflow)","The transaction reverts automatically"],
+    answer:2, exp:"Pre-0.8.0 Solidity had no built-in overflow protection. Uint8 can only hold 0–255; adding 1 wraps to 0 silently. This was exploited in early token contracts. Mitigations: use the SafeMath library or upgrade to Solidity ≥0.8.0 where overflow/underflow reverts automatically." },
+  { ch:"Ch. 2", q:"What is an oracle in the context of blockchain/dApps?",
+    options:["A type of consensus algorithm for permissioned chains","An off-chain data provider that supplies real-world information to smart contracts","A hardware security module for storing private keys","A specialised node that validates cross-chain bridges"],
+    answer:1, exp:"Oracles bridge on-chain and off-chain worlds. Price oracles (Chainlink, Band Protocol) are a top DeFi attack surface — manipulating the price feed (e.g., via flash loans in the same transaction) can exploit any contract using that price for liquidations or collateral." },
+  { ch:"Ch. 3", q:"How many stages does the PASTA threat modelling framework have?",
+    options:["3 stages","5 stages","7 stages","9 stages"],
+    answer:2, exp:"PASTA's 7 stages: (I) Business Objectives, (II) Technical Scope, (III) Application Decomposition, (IV) Threat Analysis, (V) Vulnerability Analysis, (VI) Attack Modelling, (VII) Risk Assessment & Mitigation. Chapter 3 applies all 7 to a DeFi lending dApp in exhaustive detail." },
+  { ch:"Ch. 3", q:"What is front-running in a blockchain context?",
+    options:["Submitting a transaction after seeing another's pending transaction in the mempool and paying higher gas to be included first","Deploying a smart contract before another team can","Mining blocks before full validation","Bypassing signature verification in token transfers"],
+    answer:0, exp:"Pending transactions are publicly visible in the mempool. Bots and miners can see your transaction and insert their own with higher gas to execute first. In DeFi this enables sandwich attacks. MEV (Maximal Extractable Value) is the formal term for this economic phenomenon." },
+  { ch:"Ch. 4", q:"Which static analysis tool by Trail of Bits is specifically designed to detect Solidity vulnerabilities?",
+    options:["Echidna","Mythril","Slither","Manticore"],
+    answer:2, exp:"Slither is Trail of Bits' Python-based Solidity analyser — runs in seconds and detects reentrancy, unchecked sends, tainted variables, and more. Echidna is their property-based fuzzer. Mythril uses symbolic execution. Chapter 4 covers all three in the audit methodology." },
+  { ch:"Ch. 4", q:"The Checks-Effects-Interactions (CEI) pattern in Solidity is the primary defence against which vulnerability?",
+    options:["Integer overflow","Reentrancy attacks","Access control failures","Gas limit DoS"],
+    answer:1, exp:"CEI mandates: (1) Checks — validate all conditions, (2) Effects — update state variables, (3) Interactions — make external calls last. When the external call re-enters, state has already been updated (balance already set to 0 before sending ETH), so the attack fails." },
+];
+
+let quizState = { answered: 0, correct: 0 };
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  if (container.children.length > 0) return;
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = 'qcard-' + i;
+    card.innerHTML = `
+      <div class="q-label">${q.ch} · Question ${i+1} of ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.options.map((opt,j) => `<button class="q-option" onclick="answer(${i},${j})" id="qopt-${i}-${j}">${opt}</button>`).join('')}
+      </div>
+      <div class="q-explanation" id="qexp-${i}">${q.exp}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function answer(qi, selected) {
+  const q = questions[qi];
+  const opts = document.querySelectorAll('#qcard-' + qi + ' .q-option');
+  opts.forEach(o => o.disabled = true);
+  opts[selected].classList.add(selected === q.answer ? 'correct' : 'wrong');
+  if (selected !== q.answer) opts[q.answer].classList.add('correct');
+  document.getElementById('qexp-' + qi).classList.add('show');
+  quizState.answered++;
+  if (selected === q.answer) quizState.correct++;
+  document.getElementById('score-correct').textContent = quizState.correct;
+  document.getElementById('score-total').textContent   = quizState.answered;
+  document.getElementById('score-pct').textContent     = Math.round(quizState.correct / quizState.answered * 100) + '%';
+}
+
+function resetQuiz() {
+  quizState = { answered: 0, correct: 0 };
+  document.getElementById('quiz-container').innerHTML = '';
+  document.getElementById('score-correct').textContent = '0';
+  document.getElementById('score-total').textContent   = '0';
+  document.getElementById('score-pct').textContent     = '—';
+  renderQuiz();
+}
+</script>
+
+</body>
+</html>

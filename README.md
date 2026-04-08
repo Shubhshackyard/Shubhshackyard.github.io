@@ -1,4 +1,4 @@
-# 🌌 Quirky Stardust | Cyber-Alchemy Portfolio
+# 🌌 Quirky Stardust
 
 > **Architecting Decentralized Futures. Tuning Human Consciousness.**
 

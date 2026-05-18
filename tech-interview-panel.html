@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Technology Expert Panel — Interview Questionnaire 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --accent: #c8391a;
+    --accent2: #1a4d8c;
+    --gold: #b8952a;
+    --rule: #c8c0b0;
+    --muted: #7a7060;
+    --tag-bg: #e8e0d0;
+    --ans-bg: #edeae0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  .masthead { background: var(--ink); color: var(--paper); }
+  .masthead-inner { max-width: 920px; margin: 0 auto; padding: 48px 32px 40px; }
+  .masthead-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(245,240,232,0.2); padding-bottom: 16px; margin-bottom: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: rgba(245,240,232,0.5); }
+  .masthead-badge { display: inline-block; border: 1px solid var(--accent); color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; padding: 3px 10px; margin-bottom: 20px; text-transform: uppercase; }
+  .masthead h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px,5vw,52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .masthead h1 em { font-style: italic; color: var(--gold); }
+  .masthead-sub { font-size: 14px; color: rgba(245,240,232,0.6); font-weight: 300; max-width: 560px; line-height: 1.6; margin-top: 12px; }
+  .masthead-grid { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid rgba(245,240,232,0.15); margin-top: 32px; }
+  .masthead-stat { padding: 20px 0; border-right: 1px solid rgba(245,240,232,0.15); }
+  .masthead-stat:last-child { border-right: none; }
+  .masthead-stat .num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold); display: block; }
+  .masthead-stat .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(245,240,232,0.4); text-transform: uppercase; margin-top: 4px; display: block; }
+
+  .body-wrap { max-width: 920px; margin: 0 auto; padding: 0 32px 80px; }
+  .panel-intro { display: grid; grid-template-columns: 3fr 1fr; gap: 32px; padding: 40px 0 32px; border-bottom: 2px solid var(--ink); }
+  .panel-intro p { font-size: 15px; line-height: 1.75; color: var(--muted); }
+  .panel-meta { border-left: 3px solid var(--accent); padding-left: 16px; }
+  .panel-meta-item { margin-bottom: 14px; }
+  .panel-meta-item .key { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 2px; }
+  .panel-meta-item .val { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+  .section { margin-top: 56px; }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+  .section-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 400; font-style: italic; color: var(--rule); line-height: 1; min-width: 48px; }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 4px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+
+  .questions { display: flex; flex-direction: column; }
+  .q-card { border-bottom: 1px solid var(--rule); }
+  .q-card-top { display: grid; grid-template-columns: 40px 1fr; padding: 20px 0 16px; cursor: pointer; transition: background 0.2s; user-select: none; }
+  .q-card-top:hover { background: linear-gradient(90deg,rgba(200,57,26,0.03),transparent); }
+  .q-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); padding-top: 3px; letter-spacing: 0.05em; }
+  .q-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .q-text { font-size: 15px; line-height: 1.65; color: var(--ink); font-weight: 400; margin-bottom: 10px; flex: 1; }
+  .q-toggle { flex-shrink: 0; width: 24px; height: 24px; border: 1px solid var(--rule); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 2px; transition: border-color 0.25s, background 0.25s; position: relative; }
+  .q-toggle::before, .q-toggle::after { content: ''; position: absolute; background: var(--muted); border-radius: 1px; transition: transform 0.3s ease, opacity 0.3s ease, background 0.25s; }
+  .q-toggle::before { width: 10px; height: 1.5px; }
+  .q-toggle::after { width: 1.5px; height: 10px; }
+  .q-card.open .q-toggle { border-color: var(--gold); background: rgba(184,149,42,0.08); }
+  .q-card.open .q-toggle::before { background: var(--gold); }
+  .q-card.open .q-toggle::after { background: var(--gold); transform: scaleY(0); opacity: 0; }
+  .q-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; background: var(--tag-bg); color: var(--muted); border-radius: 2px; }
+  .tag.hard { background: rgba(200,57,26,0.1); color: var(--accent); }
+  .tag.medium { background: rgba(26,77,140,0.1); color: var(--accent2); }
+  .tag.easy { background: rgba(184,149,42,0.1); color: var(--gold); }
+  .q-followup { margin-top: 6px; font-size: 12px; color: var(--muted); font-style: italic; border-left: 2px solid var(--rule); padding-left: 10px; }
+
+  .q-answer-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.38s cubic-bezier(0.4,0,0.2,1); padding-left: 40px; }
+  .q-card.open .q-answer-wrap { grid-template-rows: 1fr; }
+  .q-answer-inner { overflow: hidden; }
+  .q-answer { background: var(--ans-bg); border-left: 3px solid var(--gold); padding: 20px 24px; margin-bottom: 20px; }
+  .q-answer-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 10px; }
+  .q-answer-text { font-size: 13.5px; line-height: 1.78; color: #2a2520; font-weight: 300; }
+  .q-answer-text strong { font-weight: 500; color: var(--ink); }
+  .q-answer-text ul { margin: 10px 0 10px 18px; display: flex; flex-direction: column; gap: 5px; }
+  .q-answer-text ul li { font-size: 13.5px; line-height: 1.7; }
+  .q-answer-followup { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); font-size: 12.5px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .q-answer-followup strong { font-style: normal; color: var(--accent2); font-size: 11px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .ornament { text-align: center; margin: 48px 0; color: var(--rule); font-size: 18px; letter-spacing: 12px; }
+  .instructions { background: var(--ink); color: var(--paper); padding: 28px 32px; margin-top: 56px; }
+  .instructions h3 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 16px; }
+  .instructions ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .instructions li { font-size: 13px; color: rgba(245,240,232,0.7); padding-left: 20px; position: relative; line-height: 1.6; }
+  .instructions li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+  .footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .masthead-grid { grid-template-columns: 1fr 1fr; }
+    .panel-intro { grid-template-columns: 1fr; }
+    .masthead-top { flex-direction: column; gap: 8px; }
+    .footer { flex-direction: column; gap: 8px; text-align: center; }
+    .q-answer-wrap { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top"><span>STATE TECHNOLOGY ADVISORY PANEL</span><span>INTERVIEW DOCUMENT — MAY 2026</span></div>
+    <div class="masthead-badge">Confidential · Panel Use Only</div>
+    <h1>Expert Interview<br><em>Questionnaire</em></h1>
+    <p class="masthead-sub">A structured assessment for state-level technology advisory appointments — covering frontier AI, quantum computing, cybersecurity, and emerging science. Click any question to reveal the model answer.</p>
+    <div class="masthead-grid">
+      <div class="masthead-stat"><span class="num">42</span><span class="lbl">Questions</span></div>
+      <div class="masthead-stat"><span class="num">7</span><span class="lbl">Domains</span></div>
+      <div class="masthead-stat"><span class="num">90</span><span class="lbl">Min. Allotted</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="body-wrap">
+  <div class="panel-intro">
+    <p>This questionnaire is designed for the evaluation of candidates for senior technology advisory roles at the state level. Questions span current-state knowledge, policy thinking, strategic vision, and applied problem-solving across the most consequential technology domains of 2026. Click any question to reveal its model answer. Interviewers should note depth of reasoning alongside factual accuracy.</p>
+    <div class="panel-meta">
+      <div class="panel-meta-item"><span class="key">Format</span><span class="val">Oral + Discussion</span></div>
+      <div class="panel-meta-item"><span class="key">Evaluation</span><span class="val">5-point rubric</span></div>
+      <div class="panel-meta-item"><span class="key">Version</span><span class="val">2026-A</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION I -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">I</div>
+      <div><span class="section-tag">Foundation · Landscape</span><div class="section-title">Artificial Intelligence — Current State</div></div>
+    </div>
+    <div class="questions" id="s1"></div>
+  </section>
+  <div class="ornament">· · ·</div>
+
+  <!-- SECTION II -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">II</div>
+      <div><span class="section-tag">Frontier Physics · Computing</span><div class="section-title">Quantum Technology</div></div>
+    </div>
+    <div class="questions" id="s2"></div>
+  </section>
+  <div class="ornament">· · ·</div>
+
+  <!-- SECTION III -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">III</div>
+      <div><span class="section-tag">Defence · Governance</span><div class="section-title">Cybersecurity & Digital Sovereignty</div></div>
+    </div>
+    <div class="questions" id="s3"></div>
+  </section>
+  <div class="ornament">· · ·</div>
+
+  <!-- SECTION IV -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">IV</div>
+      <div><span class="section-tag">Frontier Science</span><div class="section-title">AI in Scientific Discovery</div></div>
+    </div>
+    <div class="questions" id="s4"></div>
+  </section>
+  <div class="ornament">· · ·</div>
+
+  <!-- SECTION V -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">V</div>
+      <div><span class="section-tag">Infrastructure · Economy</span><div class="section-title">Semiconductors, Edge AI & Green Tech</div></div>
+    </div>
+    <div class="questions" id="s5"></div>
+  </section>
+  <div class="ornament">· · ·</div>
+
+  <!-- SECTION VI -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">VI</div>
+      <div><span class="section-tag">Society · Ethics</span><div class="section-title">Digital Governance & Responsible AI</div></div>
+    </div>
+    <div class="questions" id="s6"></div>
+  </section>
+  <div class="ornament">· · ·</div>
+
+  <!-- SECTION VII -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">VII</div>
+      <div><span class="section-tag">Vision · Leadership</span><div class="section-title">Strategic & Applied Thinking</div></div>
+    </div>
+    <div class="questions" id="s7"></div>
+  </section>
+
+  <div class="instructions">
+    <h3>Interviewer Guidelines</h3>
+    <ul>
+      <li>Difficulty tags are indicative; probe all candidates for depth regardless of tier.</li>
+      <li>Technical accuracy should be weighted equally with communication clarity for advisory roles.</li>
+      <li>Follow-up probes are strongly encouraged — surface candidates' real-time reasoning, not memorized answers.</li>
+      <li>Candidates who acknowledge the limits of their knowledge and reason from principles score higher than those who confabulate confidence.</li>
+      <li>Questions Q31–Q42 should be treated as the primary evaluation block for senior advisory appointments.</li>
+      <li>Model answers are benchmarks, not scripts — award full marks for alternative well-reasoned responses.</li>
+      <li>This document should be updated quarterly given the pace of AI and quantum developments.</li>
+    </ul>
+  </div>
+  <footer class="footer">
+    <span>STATE TECHNOLOGY ADVISORY PANEL · EXAM DOCUMENT 2026-A</span>
+    <span>Prepared May 2026 · For Panel Use Only</span>
+  </footer>
+</main>
+
+<script>
+const QA = {
+  s1: [
+    {
+      n:"Q1", diff:"medium", tags:["Foundation Models","Open Source"],
+      q:"In 2026, the AI industry has shifted from building larger foundation models toward what experts call the \"post-training phase.\" What does this mean in practice, and how does it change who can compete in the AI space?",
+      fu:"Follow-up: Name two open-source models that have emerged from this shift and their significance for public-sector AI deployment.",
+      a:`The <strong>post-training phase</strong> refers to what happens after a foundation model is pre-trained on massive datasets — the process of fine-tuning, instruction-tuning, RLHF (Reinforcement Learning from Human Feedback), and domain-specific specialization. Historically, only well-capitalised labs like OpenAI, Google, and Anthropic could afford to train frontier models from scratch. The real differentiation has now shifted to post-training: taking an open or smaller base model and refining it for specific use cases using far less compute.<br><br>This shift <strong>democratizes AI</strong> because a small team with domain expertise and curated data can now produce a highly competitive specialized model. For the public sector, it means states can fund custom AI tools — in regional languages, for governance workflows, for agriculture or health — without depending entirely on foreign AI vendors.`,
+      fa:`Meta's <em>Llama 3</em> series and Mistral AI's open models are leading examples. For public deployment, their open weights allow state IT departments to self-host models without sending citizen data to external APIs — a critical data sovereignty advantage.`
+    },
+    {
+      n:"Q2", diff:"easy", tags:["Agentic AI"],
+      q:"Agentic AI is widely cited as 2026's dominant paradigm. How would you describe the difference between generative AI tools and AI agents to a state cabinet secretary with no technical background?",
+      fu:"",
+      a:`A simple analogy works well: <strong>Generative AI is like a highly intelligent pen.</strong> You pick it up, ask it to write something, it produces that output, and it stops. Every time you need something, you come back and ask again. It is reactive.<br><br><strong>An AI agent is like a capable junior officer.</strong> You give it a goal — "find all pending citizen grievances, categorize them by department, draft responses for the top 20, and schedule follow-ups" — and it takes initiative, uses digital tools, makes decisions at each step, and completes the task end-to-end without constant supervision. The practical implication for governance: AI agents can automate entire <em>workflows</em>, not just single tasks. However, they also require stronger oversight frameworks because their decisions compound across many steps.`
+    },
+    {
+      n:"Q3", diff:"medium", tags:["Multi-Agent Systems","Gov-Tech"],
+      q:"The concept of \"agent interoperability\" is being heralded as a major 2026 breakthrough. What does it mean, and what are its implications for government digital service delivery?",
+      fu:"",
+      a:`<strong>Agent interoperability</strong> means that AI agents built by different vendors, on different platforms, can communicate with each other, hand off tasks, and collaborate — much like how different software applications exchange data via APIs.<br><br>Previously, an AI agent in one government department couldn't coordinate with an agent in another. With interoperability protocols (like Anthropic's MCP — Model Context Protocol), a health department's agent could seamlessly pass patient record queries to a finance department's agent for insurance verification, then to a logistics agent for ambulance dispatch — as a coordinated workflow.<br><br>For state government, this unlocks <strong>cross-departmental automation</strong> — revenue reconciliation, disaster response coordination, multi-department citizen services — without requiring monolithic software platforms. The key governance challenge is establishing <strong>trust hierarchies</strong> so agents cannot escalate privileges or access data outside their authorization scope.`
+    },
+    {
+      n:"Q4", diff:"hard", tags:["LLM Architecture","Scaling"],
+      q:"Researchers warn that large language models are approaching a \"token horizon\" problem. What is the underlying cause, and how are leading labs addressing it?",
+      fu:"",
+      a:`The <strong>token horizon problem</strong> has two dimensions. First, the internet is running out of novel, high-quality text data — most publicly available human-written content has already been used for training. Second, processing ever-longer token sequences during training is computationally unsustainable at current scaling trajectories.<br><br>Labs are addressing this through:
+<ul><li><strong>Synthetic data generation:</strong> Using existing models to generate training data for new models — a recursive process requiring careful quality control to avoid "model collapse."</li><li><strong>Chain-of-thought reasoning traces:</strong> Training on the process of reasoning, not just outcomes — as seen in OpenAI's o-series and DeepSeek R1.</li><li><strong>Efficient architectures:</strong> Mixture-of-Experts (MoE) models that activate only relevant parameter subsets per query, dramatically reducing compute per token.</li><li><strong>Post-training intensification:</strong> Investing more in RLHF, RLAIF, and tool-use training rather than raw pre-training scale.</li></ul>`
+    },
+    {
+      n:"Q5", diff:"hard", tags:["Quantum-AI Convergence"],
+      q:"IBM has projected that 2026 marks the year a quantum computer outperforms a classical computer for a commercially relevant problem. Simultaneously, AI \"efficient model classes\" are emerging for modest hardware. How do these two trends intersect?",
+      fu:"",
+      a:`The intersection operates at multiple levels. <strong>Quantum-assisted optimization</strong> is being explored to accelerate specific AI training tasks — particularly combinatorial optimization problems in neural architecture search where quantum annealers have natural advantages.<br><br>More immediately, <strong>quantum simulation</strong> can model molecular interactions and materials properties at a level impossible for classical computers, enabling the design of better semiconductors and neuromorphic chips — which in turn enables more efficient classical AI hardware. This creates a virtuous loop: quantum → better chips → more efficient AI models → AI assists quantum error correction.<br><br>The efficient model class trend also matters because <strong>quantum-enhanced optimization algorithms</strong> for model compression (quantization, pruning, distillation) become increasingly valuable as models shrink to run on edge hardware. India should invest in this intersection — quantum-informed AI hardware design — as a strategic research focus rather than competing on raw GPU compute alone.`
+    }
+  ],
+  s2: [
+    {
+      n:"Q6", diff:"hard", tags:["Qubit Technologies","Policy"],
+      q:"Five distinct qubit technologies — superconducting, trapped ion, neutral atom, topological, and cat qubits — are all advancing simultaneously in 2026. What are the key trade-offs among them, and which would you recommend exploring for a state-funded research investment?",
+      fu:"",
+      a:`<ul><li><strong>Superconducting qubits</strong> (Google, IBM): Fast gate speeds, most mature, but require millikelvin cooling — expensive infrastructure. Best for near-term cloud access.</li><li><strong>Trapped ion</strong> (IonQ, Quantinuum): Highest fidelity, longer coherence times, but slow gate operations. Best for precision chemistry simulations.</li><li><strong>Neutral atom</strong> (QuEra, Pasqal): Highly scalable, promising for 2026–2030 fault-tolerant milestones. Good for optimization problems.</li><li><strong>Topological qubits</strong> (Microsoft Majorana): Theoretically most error-resistant, still maturing — long-term bet.</li><li><strong>Cat qubits</strong> (Alice & Bob): Novel error suppression through hardware design; early but promising.</li></ul>For a <strong>state research investment</strong>, I recommend partnering with neutral atom or trapped ion programs — they have clearer near-term application paths in chemistry, drug discovery, and optimization relevant to agriculture, logistics, and supply chain — high-priority domains for most Indian states. Investment in software stack and algorithm development alongside hardware access is equally critical.`
+    },
+    {
+      n:"Q7", diff:"medium", tags:["QKD","Cybersecurity"],
+      q:"Scientists recently demonstrated quantum key distribution across 120 kilometers of optical fiber. What does this mean for national cybersecurity infrastructure, and how far are we from practical quantum-secure communication at a state level?",
+      fu:"Follow-up: What is \"harvest now, decrypt later\" and why does it make quantum-safe cryptography urgent today?",
+      a:`<strong>Quantum Key Distribution (QKD)</strong> uses quantum mechanical properties — specifically, the no-cloning theorem and the observer effect — to transmit encryption keys in a way that makes eavesdropping physically detectable. The 120km demonstration using semiconductor quantum dots represents a major step in stability and practical fiber deployment.<br><br>For national infrastructure, this signals that <strong>inter-city secure government communication links</strong> are approaching feasibility. Major corridors — Delhi to state capitals, financial centers — could be secured with quantum channels within 5–7 years.<br><br>For state governments today, practical QKD is still 3–5 years away from being cost-effective. However, migration to <strong>post-quantum cryptographic (PQC) algorithms</strong> — standardized by NIST in 2024 — should begin immediately on all sensitive government digital infrastructure.`,
+      fa:`"Harvest now, decrypt later" is a strategy where adversaries — typically state-level threat actors — <em>intercept and store encrypted government communications today</em>, even if they cannot decrypt them, knowing that future quantum computers will break current RSA/ECC encryption retroactively. Classified communications encrypted today could be decrypted in 10 years. This makes PQC migration not a future concern but an immediate national security imperative.`
+    },
+    {
+      n:"Q8", diff:"medium", tags:["Geopolitics","Quantum Strategy"],
+      q:"The EU has invested over €11 billion in quantum over five years and its EuroQCI infrastructure became operational in 2026. What lessons should Indian states draw from this level of coordinated investment?",
+      fu:"",
+      a:`Three clear lessons from the EU Quantum Europe Strategy:
+<ul><li><strong>Coordination over fragmentation:</strong> The EU structured investment across five pillars — research, infrastructure, ecosystem, dual-use, and skills — with governance at a continental level. India's NQM mirrors this, but states must actively integrate rather than pursue redundant standalone programs.</li><li><strong>Infrastructure as public good:</strong> EuroQCI treats quantum communication as shared national infrastructure — like roads. State governments should advocate for NQM-funded quantum communication nodes in their cities and industrial corridors, not just on IIT/IISc campuses.</li><li><strong>Ecosystem building, not just hardware:</strong> The EU explicitly invested in middleware, algorithms, skills training, and quantum-ready talent pipelines. A state's most effective lever is funding quantum courses in engineering colleges, creating quantum internship pathways with national labs, and attracting quantum startups through dedicated innovation zones.</li></ul>`
+    },
+    {
+      n:"Q9", diff:"medium", tags:["Error Correction","Funding Rationale"],
+      q:"Current quantum logical error rates stand around 0.14% per cycle, while fault-tolerant algorithms need roughly 10⁻⁶ error rates. How would you explain this gap to a state finance minister deciding whether to fund quantum research?",
+      fu:"",
+      a:`"Minister, think of today's quantum computers like the early transistor radios of the 1950s — they worked, but with enough static that you couldn't rely on them for critical communications. The gap you're describing is the difference between those crackling radios and the crystal-clear digital communication we have today.<br><br>The 0.14% error rate sounds small, but in a quantum calculation requiring millions of operations, errors compound catastrophically. Fault-tolerant algorithms need errors 140,000 times smaller. That sounds daunting, but <strong>the trajectory is exponential improvement</strong> — similar to how transistor density improvements followed Moore's Law.<br><br>The funding argument is not 'we'll have a working quantum computer next year.' It is: <strong>'the nations that build quantum talent and infrastructure today will capture the drug discovery, materials, and cryptography applications that emerge in 5–10 years.'</strong> Missing this window means depending on foreign quantum platforms for critical national computations — a sovereignty risk comparable to oil dependence."`
+    },
+    {
+      n:"Q10", diff:"medium", tags:["Materials Science","Energy Policy"],
+      q:"Quantum simulations are now enabling exploration of new materials for batteries, semiconductors, and renewable energy. How might this capability be leveraged in India's energy transition goals?",
+      fu:"",
+      a:`India's energy transition faces two critical material bottlenecks: <strong>battery chemistry for storage</strong> and <strong>solar cell efficiency</strong>. Quantum simulation addresses both directly.<br><br>Classical computers cannot accurately model the quantum mechanical behavior of electrons in complex molecules — which is precisely what determines battery charge density, cycle stability, and thermal safety. Quantum computers can simulate these interactions natively, enabling <strong>discovery of next-generation solid-state electrolytes</strong> and cathode materials that could double energy density while eliminating fire risk from lithium-ion cells.<br><br>For solar, quantum simulation can model perovskite crystal structures to optimize efficiency and stability — potentially pushing solar cell efficiency past 40%, versus the current commercial ceiling of ~26%.<br><br>India's strategic play: partner IIT-Bombay, IISc, and CSIR labs with quantum cloud access through the NQM to run materials discovery programs for indigenous battery and solar manufacturing. Even 2–3 breakthrough materials discoveries could justify the entire quantum research investment through their impact on India's ₹40+ trillion energy transition program.`
+    }
+  ],
+  s3: [
+    {
+      n:"Q11", diff:"hard", tags:["AI Governance","Critical Infrastructure"],
+      q:"AI is now embedded in military command-and-control systems. What governance frameworks should states adopt to ensure AI-assisted decisions in critical infrastructure remain accountable and auditable?",
+      fu:"",
+      a:`Three foundational principles must govern AI in critical systems:
+<ul><li><strong>Human-in-the-loop mandates:</strong> For any consequential decision — power grid switching, dam management, emergency alerts — AI may recommend but a credentialed human officer must confirm. The EU AI Act's "high-risk AI" classification is a useful reference framework.</li><li><strong>Immutable audit trails:</strong> Every AI recommendation, the data it was based on, and the human confirmation must be logged in tamper-evident records — ideally on append-only infrastructure. This enables post-incident forensic analysis and establishes clear liability chains.</li><li><strong>Red team and adversarial testing:</strong> Before deployment in critical systems, AI models must undergo adversarial input testing — what happens if sensor data is spoofed? What edge cases cause dangerous failure? This testing must be mandatory and independently verified.</li></ul>At the state level, the immediate priority is building an <strong>AI Risk Register</strong> for all government AI systems, classifying them by consequence of failure, and mandating governance tiers accordingly.`
+    },
+    {
+      n:"Q12", diff:"medium", tags:["FinTech Security","Gov-Tech"],
+      q:"Banks like JPMorganChase are dedicating $19.8 billion annually to technology — a significant portion to AI-augmented cybersecurity scanning trillions in daily transactions. What can state revenue and finance departments learn from this?",
+      fu:"",
+      a:`JPMorgan's model offers three transferable lessons for state finance departments:
+<ul><li><strong>Anomaly detection at scale:</strong> AI systems scanning all transactions in real time — flagging unusual patterns that human auditors would never catch — can transform GST compliance, treasury operations, and welfare payment integrity. States with large DBT programs are particularly vulnerable to systematic fraud that only shows up in aggregate patterns.</li><li><strong>Treating tech as core infrastructure, not IT cost:</strong> JPMorgan reclassified AI from "experimental R&D" to "core infrastructure." State governments must similarly embed cybersecurity and AI monitoring into foundational budget lines — not discretionary IT spending subject to austerity cuts.</li><li><strong>Personalized fraud detection:</strong> The same AI techniques used to personalize retail banking can identify anomalous contractor payment patterns, duplicate beneficiaries, or shell entities in procurement — a major source of fiscal leakage in state governments.</li></ul>The scale differential is real, but the <em>architecture</em> is replicable at far lower cost using cloud-based ML services and open-source fraud detection models.`
+    },
+    {
+      n:"Q13", diff:"hard", tags:["Synthetic Media","Elections"],
+      q:"Deepfake technology has matured to near-indistinguishable quality for audio and video of public officials. What detection and verification standards should state election commissions adopt?",
+      fu:"",
+      a:`A multi-layer approach is required:
+<ul><li><strong>Content provenance standards (C2PA):</strong> Require all official government communications to be digitally signed at the point of capture using cryptographic provenance standards. Viewers can verify the chain of custody from camera to publication.</li><li><strong>Platform disclosure mandates:</strong> Legally require all AI-generated or AI-manipulated political content to carry persistent, non-removable disclosure labels. The Election Commission's deepfake guidelines need teeth — mandatory pre-screening for paid political advertisements.</li><li><strong>Rapid response detection unit:</strong> A dedicated state-level cell using open-source deepfake detection models (trained specifically on Indian faces and languages) to investigate reported synthetic media during election periods, with a 24-hour response SLA.</li><li><strong>Public media literacy:</strong> Detection technology is always in an arms race with generation technology. The most durable defense is a citizenry trained to verify claims before sharing — integrated into school curricula and voter awareness programs.</li></ul>`
+    },
+    {
+      n:"Q14", diff:"medium", tags:["AI Safety"],
+      q:"What is the difference between \"AI safety\" and \"AI security,\" and why does conflating them lead to poor policy decisions?",
+      fu:"Follow-up: Name one regulatory framework you consider a useful model for state-level AI governance.",
+      a:`<strong>AI Safety</strong> concerns whether an AI system behaves as intended across all conditions — does it produce harmful outputs, develop unintended goals, fail catastrophically, or behave unpredictably at scale? It is fundamentally about the <em>design and alignment</em> of the system itself — including bias, reliability, explainability, and long-term alignment risk.<br><br><strong>AI Security</strong> concerns protecting AI systems from <em>external adversarial attacks</em> — adversarial inputs that fool classifiers, data poisoning attacks on training pipelines, model extraction by competitors, and prompt injection attacks on deployed LLMs.<br><br>Conflating them leads to poor policy because: a policy focused only on security (firewalls, access controls) misses fundamental safety failures like biased welfare allocation — which require redesign, not security patches. Conversely, safety-focused mandates don't protect against adversarial attacks on a well-designed model.`,
+      fa:`The EU AI Act is the most comprehensive framework — its risk-based tiering (unacceptable, high, limited, minimal risk) is a replicable architecture for Indian state-level AI governance, adaptable to local contexts without wholesale adoption of its compliance costs.`
+    },
+    {
+      n:"Q15", diff:"hard", tags:["PQC Migration"],
+      q:"Post-quantum cryptography (PQC) standards were finalized by NIST in 2024. What are the critical milestones for a responsible state-level migration?",
+      fu:"",
+      a:`NIST finalized three primary PQC standards: <strong>ML-KEM</strong> (CRYSTALS-Kyber, for key encapsulation), <strong>ML-DSA</strong> (CRYSTALS-Dilithium, for digital signatures), and <strong>SLH-DSA</strong> (SPHINCS+). These replace RSA and ECC which are vulnerable to Shor's algorithm on future quantum hardware.<br><br>A responsible state migration plan:
+<ul><li><strong>Cryptographic inventory (Year 1):</strong> Catalog all systems using public-key cryptography — e-governance portals, treasury systems, health records. Many systems have undocumented cryptographic dependencies.</li><li><strong>Prioritize by sensitivity:</strong> Land records, UID-linked systems, treasury, and police databases contain long-lived sensitive data — highest priority due to harvest-now-decrypt-later risk.</li><li><strong>Hybrid deployment (Years 1–3):</strong> Run PQC algorithms alongside classical algorithms simultaneously — protecting against both quantum and classical attacks during the transition period.</li><li><strong>Vendor assessment (ongoing):</strong> All state technology procurements from 2025 forward must include PQC-readiness as a mandatory criterion.</li><li><strong>Staff training:</strong> Cryptographic transitions fail most often due to implementation errors — dedicated PQC training for state IT department personnel is non-negotiable.</li></ul>`
+    }
+  ],
+  s4: [
+    {
+      n:"Q16", diff:"hard", tags:["AI + Science","R&D Policy"],
+      q:"Microsoft Research has stated that by 2026, AI will actively \"join the process of discovery\" — generating hypotheses and running experiments. How should universities and state research institutes restructure in response?",
+      fu:"",
+      a:`Research institutions must restructure across four dimensions:
+<ul><li><strong>Lab infrastructure digitization:</strong> AI lab assistants require machine-readable experimental data, automated lab equipment with API interfaces, and centralized data management systems. Many Indian research labs still rely on paper notebooks and manual data entry — this is the first barrier to address.</li><li><strong>Revised researcher roles:</strong> Scientists must transition from "running experiments" to "designing experimental strategies and evaluating AI-generated hypotheses." PhD curricula need courses on AI-assisted research methodology, not just traditional lab techniques.</li><li><strong>IP and attribution frameworks:</strong> When an AI system co-discovers a compound, existing IP law has no clear answer on ownership. State-funded research institutions need updated IP policies defining ownership, publication credit, and commercialization rights for AI-assisted discoveries — before such discoveries occur.</li><li><strong>Interdisciplinary structures:</strong> The most effective AI-assisted research combines domain scientists with ML engineers and data curators in standing teams. Research funding structures must reward and accommodate these hybrid teams.</li></ul>`
+    },
+    {
+      n:"Q17", diff:"hard", tags:["BioTech","Strategic"],
+      q:"AlphaFold revolutionized protein structure prediction. What comparable AI-driven breakthroughs are expected in drug discovery, genomics, or materials science in the near term, and what is India's positioning in this race?",
+      fu:"",
+      a:`Several AlphaFold-scale breakthroughs are actively developing:
+<ul><li><strong>Drug-target interaction prediction:</strong> Models like AlphaFold3 and Isomorphic Labs successors are beginning to predict not just protein structures but how drug molecules bind to protein targets — compressing the earliest stage of drug discovery from years to days.</li><li><strong>Whole-genome foundation models:</strong> Nucleotide Transformer and Evo models are learning the "grammar" of DNA — enabling prediction of genetic variant effects and gene expression changes from sequence alone. India's genomic diversity (largely underrepresented in global training data) is a strategic asset here.</li><li><strong>Materials discovery:</strong> Google's GNoME model discovered 2.2 million new stable crystal structures in 2024 — more than all of human materials science history. Analogous tools for battery, catalyst, and superconductor discovery are actively advancing.</li></ul><strong>India's positioning:</strong> Strengths in generics pharmaceutical manufacturing and growing genomics infrastructure (IndiGen initiative). The strategic gap is <em>AI talent applied to biology</em> — a competency that states can help build by funding computational biology centers co-located with pharmaceutical industry clusters in Hyderabad, Pune, and Ahmedabad.`
+    },
+    {
+      n:"Q18", diff:"medium", tags:["Space Tech","Dual-Use Innovation"],
+      q:"A next-generation NASA space computer chip is demonstrating performance hundreds of times beyond current spaceflight processors. How does investment in space computing translate to civilian technology benefits?",
+      fu:"",
+      a:`Space computing drives civilian technology through <strong>radiation-hardened extreme engineering</strong> — components that must function reliably in deep space become templates for ultra-reliable civilian systems. Historically, this pathway gave us GPS, memory foam, scratch-resistant lenses, water filtration technology, and the CMOS image sensors in every smartphone.<br><br>The specific breakthrough — a processor capable of autonomous deep-space decision-making — is essentially an <strong>extreme edge AI chip</strong> that processes complex sensor data locally with minimal power and zero tolerance for failure. Civilian applications:
+<ul><li>Autonomous agricultural drones and satellite-based crop monitoring with onboard processing</li><li>Remote health diagnostics devices in areas with no connectivity</li><li>Disaster response sensors that process data locally when communication infrastructure is destroyed</li><li>Industrial IoT in harsh environments (mines, offshore platforms, high-altitude infrastructure)</li></ul>For India, ISRO's computing research and the growing commercial space sector (200+ space startups as of 2026) represent an underutilized pipeline for exactly this kind of dual-use technology transfer.`
+    },
+    {
+      n:"Q19", diff:"hard", tags:["Supercomputing","National Strategy"],
+      q:"Europe's JUPITER exascale supercomputer recently achieved the full simulation of a 50-qubit quantum system. What does exascale computing unlock for scientific research, and should India prioritize its own exascale program?",
+      fu:"",
+      a:`<strong>Exascale computing</strong> (10¹⁸ floating point operations per second) unlocks a qualitatively different class of scientific problems:
+<ul><li>Full-resolution global climate models that resolve individual storm systems — critical for monsoon prediction and disaster preparedness</li><li>Whole-brain neural simulations at cellular resolution</li><li>Full nuclear reactor physics simulation for safer reactor design</li><li>Drug-protein interaction modeling at scale with explicit quantum mechanical treatment</li></ul>The JUPITER achievement — simulating 50 qubits classically — also sets the boundary where quantum computers must exceed classical capability to demonstrate genuine quantum advantage.<br><br><strong>Should India prioritize exascale?</strong> A targeted investment focused on climate science, genomics, and materials discovery is strategically justified. However, the cost is $500M–$1B for a single system. A more pragmatic near-term path: maximize utilization of existing national computing infrastructure and access international exascale resources through bilateral research agreements while building domestic capacity incrementally — rather than making a single massive bet.`
+    },
+    {
+      n:"Q20", diff:"hard", tags:["Synthetic Biology","Biosafety"],
+      q:"Synthetic biology is enabling the design of organisms with novel capabilities. What regulatory architecture should a state adopt to balance innovation with biosafety concerns?",
+      fu:"",
+      a:`Synthetic biology sits at the intersection of opportunity (biofuels, biodegradable plastics, novel therapeutics) and catastrophic risk (engineered pathogens). The regulatory architecture must be <strong>tiered by risk level</strong>:
+<ul><li><strong>Tier 1 (low-risk, contained):</strong> Standardized DNA parts assembly, commonly used chassis organisms (E. coli K12, yeast) — streamlined review, BSL-1 requirements. Fast-track for academic and startup innovation.</li><li><strong>Tier 2 (moderate risk, contained):</strong> Novel gene circuits, non-standard chassis, work with known pathogens in modified form — institutional biosafety committee review, BSL-2 requirements, mandatory data sharing with national repository.</li><li><strong>Tier 3 (release/environmental applications):</strong> Gene drives, organisms intended for environmental release — federal-level review under RCGM (Review Committee on Genetic Manipulation), environmental impact assessment, multi-year monitoring requirements.</li></ul>At the state level, the most actionable step is <strong>strengthening institutional biosafety committees (IBCs)</strong> at universities and research parks — ensuring they have the scientific competence to evaluate synthetic biology proposals, not just standard recombinant DNA work.`
+    }
+  ],
+  s5: [
+    {
+      n:"Q21", diff:"medium", tags:["Edge AI","Public Services"],
+      q:"IBM researchers describe 2026 as \"frontier versus efficient\" in AI model classes. ASIC-based accelerators, chiplet designs, and analog inference are maturing. What is your view on edge AI deployment for state public services — healthcare, agriculture, and public safety?",
+      fu:"",
+      a:`Edge AI — where inference runs on local devices rather than cloud servers — is transformative for India's geography and connectivity challenges. The maturation of efficient chips makes previously-cloud-dependent applications deployable in remote areas:
+<ul><li><strong>Healthcare:</strong> Handheld AI diagnostic devices for TB screening, diabetic retinopathy detection, and maternal health risk assessment can now run on sub-$50 edge chips without internet connectivity. ASHA workers in remote districts can carry AI diagnostic support in their pockets.</li><li><strong>Agriculture:</strong> Soil sensors with embedded AI for real-time nitrogen, moisture, and pH analysis; drone-based crop disease detection that processes imagery locally to reduce latency and bandwidth requirements.</li><li><strong>Public Safety:</strong> CCTV systems with on-device crowd density analysis and anomaly detection that process video locally — reducing bandwidth requirements, latency, and central server load while limiting the privacy risk of centralizing all video feeds.</li></ul>The key procurement principle: edge AI deployments must specify <strong>open, interoperable data formats</strong> from the outset to prevent vendor lock-in — a failure mode that has plagued many state smart city projects.`
+    },
+    {
+      n:"Q22", diff:"hard", tags:["Semiconductor Strategy","Industrial Policy"],
+      q:"The global semiconductor supply chain has been reshaping since 2022. Where does India stand in the semiconductor manufacturing ecosystem, and what policy instruments could a state government deploy to attract fab investment?",
+      fu:"",
+      a:`India's semiconductor journey is at an early but accelerating stage. The India Semiconductor Mission (ISM) has catalyzed significant investments: Tata Electronics partnered with PSMC for a 28nm fab in Gujarat; Micron's ATMP facility in Sanand represents the assembly and testing segment. India currently occupies the <strong>design and packaging ends</strong> of the value chain — not yet advanced logic fabrication (sub-5nm), which remains concentrated in TSMC Taiwan and Samsung Korea.<br><br>State-level policy instruments to attract semiconductor investment:
+<ul><li><strong>Land and utilities package:</strong> Fabs require ultra-pure water (5–10 million gallons/day), uninterrupted power with dedicated substations, and large contiguous land parcels. States that can guarantee these utilities at scale and competitive pricing have a decisive advantage.</li><li><strong>Workforce pipeline commitments:</strong> Partner with local engineering colleges to launch semiconductor-specific curricula — Tata's fab in Gujarat benefited from proximity to technical institutions; replicate this model explicitly.</li><li><strong>Single-window clearance with guaranteed timelines:</strong> Environmental, factory, and land clearances in 90 days or fewer — with financial penalties on state agencies for delays. Time-to-groundbreaking is a primary site selection criterion.</li><li><strong>Cluster incentives:</strong> Actively recruit chemicals suppliers, equipment maintenance firms, and specialized logistics alongside anchor fabs.</li></ul>`
+    },
+    {
+      n:"Q23", diff:"hard", tags:["Energy Policy","Data Centers"],
+      q:"AI data centers consumed an estimated 200+ TWh globally in 2025. How should states with significant data center growth plan for power infrastructure, and what is the role of renewable energy in making AI sustainable?",
+      fu:"",
+      a:`The AI power demand problem is structural: training large models requires sustained gigawatt-scale compute bursts; inference at scale requires 24/7 baseload power with near-zero downtime. Neither is compatible with intermittent renewable sources alone.<br><br>A state planning for data center growth needs a <strong>multi-source energy strategy</strong>:
+<ul><li><strong>Dedicated renewable procurement with storage:</strong> Mandate that new data centers above 10MW co-develop battery storage equivalent to 4–6 hours of capacity — enabling high renewable share without grid instability.</li><li><strong>Transmission infrastructure ahead of demand:</strong> Data center clusters require dedicated high-voltage transmission lines — plan and build these before the data centers, not after. States that failed to do this faced operational bottlenecks that delayed commissioning by 18+ months.</li><li><strong>Water-free cooling incentives:</strong> Traditional data centers use enormous amounts of water for cooling. States facing water stress should incentivize air-cooled and immersion-cooled designs through differential power tariffs.</li><li><strong>Green data center certification:</strong> Create a state-level certification for data centers meeting energy efficiency (PUE &lt; 1.3) and renewable share (&gt;70%) standards — tied to preferential land allocation and state procurement preferences.</li></ul>`
+    },
+    {
+      n:"Q24", diff:"hard", tags:["Robotics","Labour Economics"],
+      q:"Humanoid robots are being trained at scale using video capture of human motion. What workforce policy framework should a state adopt in anticipation of physical automation entering manufacturing and logistics?",
+      fu:"",
+      a:`Physical automation will affect India differently than western economies due to our labor cost structure — broad humanoid robot deployment in Indian manufacturing is likely 7–12 years away at current cost trajectories. However, <strong>early policy architecture prevents crisis response later</strong>:
+<ul><li><strong>Automation impact mapping:</strong> Commission a state-level study mapping which job categories in key industries (textiles, logistics, assembly manufacturing) are at highest displacement risk and in which districts. This data should drive targeted skilling investment.</li><li><strong>Transition to supervision and maintenance roles:</strong> The pattern from industrial automation history: operators become supervisors and technicians. State ITI curricula should include robot maintenance, programming, and quality supervision tracks now.</li><li><strong>Social protection modernization:</strong> Existing labor welfare schemes are tied to formal employment categories that automation blurs. Begin designing portable benefits systems (portable ESI, PF) decoupled from specific employment relationships.</li><li><strong>Robot density monitoring:</strong> Establish a reporting mechanism for industrial robot additions — analogous to how states track organized sector employment — to give early warning of displacement trends before they become crises.</li></ul>`
+    },
+    {
+      n:"Q25", diff:"medium", tags:["Digital Twins","Smart Cities"],
+      q:"What is \"digital twin\" technology and how could a state government use it to model urban planning, disaster response, or infrastructure maintenance?",
+      fu:"",
+      a:`A <strong>digital twin</strong> is a real-time virtual replica of a physical system — continuously updated with sensor data so that the digital model mirrors the real-world state of its physical counterpart. Think of it as a living simulation that you can query, test scenarios against, and use to predict future states.<br><br>State government applications:
+<ul><li><strong>Urban planning:</strong> A digital twin of a city integrates road traffic, building density, utility load, air quality, and population movement data. Planners can simulate the impact of a new metro line or industrial zone before a single rupee is spent — testing traffic, flood drainage, and air quality impacts in the model first.</li><li><strong>Disaster response:</strong> A hydrological digital twin — integrating drainage network data, weather forecasts, and soil saturation levels — can predict which areas will flood 6–12 hours in advance with enough resolution to pre-position pumps, alert specific wards, and route evacuation traffic.</li><li><strong>Infrastructure maintenance:</strong> Bridge and road digital twins fed by IoT sensor data (vibration, strain, temperature) can predict maintenance needs before visible failure — shifting from reactive to predictive maintenance. Singapore's National Digital Twin Initiative is the leading reference implementation.</li></ul>The foundational requirement: a unified spatial data platform with standardized GIS data formats and sensor APIs.`
+    }
+  ],
+  s6: [
+    {
+      n:"Q26", diff:"hard", tags:["Risk Management","AI Economy"],
+      q:"MIT researchers warn of potential \"AI bubble\" dynamics similar to the dot-com bust. If there is a rapid deflation of AI investment, how should state governments protect public-sector AI projects from being stranded assets?",
+      fu:"",
+      a:`The dot-com parallel is instructive: the bubble destroyed speculative companies but the underlying infrastructure — fiber cables, internet protocols, e-commerce patterns — survived and became foundational. State governments should structure AI investments to build <strong>durable infrastructure, not speculative applications</strong>.<br><br>Protective strategies:
+<ul><li><strong>Avoid proprietary lock-in:</strong> Public-sector AI projects that depend entirely on a single vendor's platform become stranded if that vendor collapses. Require all state AI deployments to be built on open standards with data portability guarantees.</li><li><strong>Prioritize capability building over tool purchasing:</strong> An AI training program for 5,000 state employees creates lasting human capital. A ₹50Cr contract for a proprietary AI tool creates a dependency. Invest in the former first.</li><li><strong>Modular architecture:</strong> Structure AI projects so individual components (data pipeline, ML model, user interface) can be replaced independently — preventing total system failure when one component's supporting ecosystem collapses.</li><li><strong>Open-source first policy:</strong> Where open-source AI solutions meet 80% of requirements, prefer them over proprietary alternatives — eliminating vendor-dependent stranding risk entirely.</li><li><strong>Data assets as the real investment:</strong> High-quality, well-governed state data (agricultural, health, spatial) retains value regardless of which AI models are used to process it. Invest heavily in data quality and governance infrastructure.</li></ul>`
+    },
+    {
+      n:"Q27", diff:"medium", tags:["Regional Language AI","Communication"],
+      q:"Generative AI is now widely used for creating content in regional Indian languages. What are the opportunities and risks this presents for state-level public communication, and how do you ensure linguistic and cultural accuracy?",
+      fu:"",
+      a:`<strong>Opportunities:</strong> India has 22 scheduled languages and hundreds of dialects. AI enables state governments to deliver public health campaigns, welfare scheme information, and emergency alerts in languages previously unreachable at scale — without maintaining armies of translators. Conversational AI in Bhojpuri, Santali, or Tulu can make government services accessible to citizens excluded by language barriers.<br><br><strong>Risks:</strong>
+<ul><li><strong>Linguistic errors in critical communications:</strong> A mistranslation in a flood evacuation notice or drug dosage instruction can be life-threatening. Current models for low-resource Indian languages have significantly higher error rates than for Hindi or English.</li><li><strong>Cultural tone-deafness:</strong> AI may translate words accurately but miss register, honorifics, or culturally specific frames of reference that determine whether a message is trusted or dismissed.</li><li><strong>Dialect over-simplification:</strong> Models trained on "Hindi" may not reflect Awadhi, Maithili, or Braj Bhasha nuances — imposing linguistic homogenization that alienates intended audiences.</li></ul><strong>Quality assurance framework:</strong> All AI-generated government content in regional languages must pass through a human expert review stage — preferably from the specific dialect community — before publication. Partner with institutions like CIIL (Central Institute of Indian Languages) for validation.`
+    },
+    {
+      n:"Q28", diff:"hard", tags:["Accountability","AI Liability"],
+      q:"As AI systems take on more organizational responsibilities, who should own AI-related decision failures in a state government context — the vendor, the deploying department, or the approving officer?",
+      fu:"Follow-up: How does India's Digital Personal Data Protection Act (2023) intersect with AI accountability?",
+      a:`This requires <strong>shared but differentiated liability</strong>, structured by the nature of the failure:
+<ul><li><strong>Vendor liability:</strong> If the AI system failed due to a documented defect, data poisoning vulnerability, or performance outside specified operating parameters — vendor bears primary liability. Government contracts must specify performance benchmarks and include liability clauses tied to them.</li><li><strong>Deploying department liability:</strong> If the AI was used outside its specified scope, with insufficient human oversight, or without the risk assessment the vendor recommended — the department bears liability. "The AI did it" cannot be a defense for decisions that a human officer could have reviewed.</li><li><strong>Approving officer liability:</strong> For high-risk AI deployments (welfare denial, law enforcement flagging, health triage), the officer who approved deployment without adequate impact assessment bears personal accountability — similar to how an officer signing off on a flawed tender bears responsibility.</li></ul>The principle: <strong>AI reduces but does not eliminate human accountability.</strong>`,
+      fa:`India's DPDP Act 2023 establishes that "Data Fiduciaries" (including government entities) must have lawful purpose for data processing and are liable for data breaches. When AI systems process personal data to make decisions about individuals — welfare eligibility, policing, health — the government entity becomes a Data Fiduciary under DPDP. This creates an implicit obligation for algorithmic transparency, purpose limitation, and data accuracy — requirements that directly constrain how AI decision systems must be designed.`
+    },
+    {
+      n:"Q29", diff:"medium", tags:["Algorithmic Bias","Public Policy"],
+      q:"What is \"algorithmic bias\" and can you describe a real or hypothetical scenario where it could cause harm in a government welfare or law enforcement application in India?",
+      fu:"",
+      a:`<strong>Algorithmic bias</strong> occurs when an AI system produces systematically unfair outcomes for certain groups — not because of explicit discrimination, but because patterns in historical training data encode past discrimination, or because proxy variables correlate with protected characteristics.<br><br><strong>Welfare scenario:</strong> A state deploys an AI system to prioritize MGNREGS work allocation or ration card verification. If the training data reflects historical patterns of exclusion — lower documented participation by women, Adivasi communities, or seasonal migrants — the algorithm learns to deprioritize these groups. The system doesn't "discriminate" in any legally recognizable way; it simply reproduces and amplifies historical exclusion at scale.<br><br><strong>Law enforcement scenario:</strong> A predictive policing system trained on historical FIR data from areas with established over-policing of minority communities will flag those communities at higher rates — creating a feedback loop where more policing generates more data, which justifies more policing. The US COMPAS recidivism algorithm controversy is the documented reference case.<br><br><strong>Mitigation requires:</strong> Mandatory bias audits before deployment; disaggregated performance testing across demographic groups; independent oversight bodies with technical capacity to evaluate AI systems; and clear appeal mechanisms for individuals adversely affected by algorithmic decisions.`
+    },
+    {
+      n:"Q30", diff:"hard", tags:["AI Regulation","Equity"],
+      q:"Several governments are debating whether AI should be classified as a \"public utility.\" What is your position, and what are the implications for regulation, pricing, and access equity?",
+      fu:"",
+      a:`This question rewards reasoning quality over a "correct" answer. A strong response would argue:<br><br><strong>The case for utility classification:</strong> If AI becomes essential infrastructure for economic participation — like electricity or internet — pricing it as a luxury good creates structural inequality. Citizens who cannot afford AI-augmented legal, medical, or financial advice will be systematically disadvantaged. The natural monopoly dynamics of AI (massive data and compute advantages compound with scale) also suggest market failure without regulation.<br><br><strong>The case against:</strong> Unlike electricity (homogeneous commodity), AI is rapidly evolving and highly heterogeneous. Utility regulation designed for stable infrastructure would freeze innovation. The better model may be <strong>interoperability mandates and anti-monopoly enforcement</strong> — preventing lock-in without regulating as a utility.<br><br><strong>A nuanced position:</strong> Classify specific AI applications as utility-grade where they are essential and naturally monopolistic — AI-assisted government services, criminal justice tools, healthcare diagnostics — while leaving the broader AI ecosystem to competitive market dynamics with strong consumer protection and data portability requirements. This mirrors how we regulate pharmaceutical drugs (strict for high-stakes applications, less so for supplements) rather than electricity (uniform utility regulation).`
+    }
+  ],
+  s7: [
+    {
+      n:"Q31", diff:"hard", tags:["State Tech Strategy"],
+      q:"If you were advising the Chief Minister of a tier-2 Indian state on a 5-year technology strategy, what would be your three non-negotiable priorities and why?",
+      fu:"",
+      a:`<strong>Priority 1 — Digital public infrastructure as the foundation:</strong> Before any flashy AI deployment, ensure every citizen has a digital identity (Aadhaar-linked), every government service is accessible via mobile, and every government-to-citizen payment is digital. This is not glamorous, but it is the substrate on which everything else is built. States that skipped this layer have chronically underperforming AI investments because the data foundation doesn't exist.<br><br><strong>Priority 2 — Domain-specific AI in agriculture and health:</strong> These are the two sectors where AI can have the highest and most measurable impact on citizen welfare for a tier-2 state. Precision agriculture advisory systems, AI-assisted diagnostics at primary health centers, and predictive epidemic surveillance — all have clear ROI pathways and can be deployed at state scale without frontier-level AI infrastructure.<br><br><strong>Priority 3 — Talent and ecosystem development over procurement:</strong> The most durable competitive advantage a state can build is a pipeline of technology talent — engineers, data scientists, policy analysts with technical literacy. An AI training program for state employees creates lasting human capital. Technology procurement depreciates; talent compounds.`
+    },
+    {
+      n:"Q32", diff:"hard", tags:["AgriTech","Inclusion"],
+      q:"Agriculture employs over 40% of India's workforce. How would you build a state-level AI and IoT strategy for precision agriculture that is technically sound and accessible to low-literacy smallholder farmers?",
+      fu:"",
+      a:`The critical design principle: <strong>technology must meet farmers where they are</strong> — feature phones, local languages, low data bandwidth, voice interaction — not where technologists assume they are.<br><br><strong>Technical architecture:</strong>
+<ul><li>Satellite + drone remote sensing for crop health mapping, aggregated at village level and accessible through block-level agriculture extension offices</li><li>Shared soil sensor infrastructure — grid-based sensors shared across a cluster of farms, reducing cost from unaffordable to negligible per farmer</li><li>Edge AI processing at Krishi Vigyan Kendra (KVK) nodes so connectivity bottlenecks don't prevent advisory delivery</li></ul><strong>Accessibility architecture:</strong>
+<ul><li>Voice-based AI advisory in regional dialects via IVR — a farmer calls a number and gets personalized advisory based on their location, crop, and current weather conditions. No smartphone required.</li><li>WhatsApp-based image diagnosis: farmer photographs crop disease symptoms; AI identifies the pest/disease and recommends treatment in under 30 seconds</li><li>Community champion model: train one digitally-literate person per village as an "AI agricultural mitra" — this person uses the advanced interface and translates advice to neighbors, addressing last-mile barriers without requiring universal digital literacy</li></ul>`
+    },
+    {
+      n:"Q33", diff:"hard", tags:["Research IP","Science Governance"],
+      q:"Large language models are now being used as \"AI lab assistants\" capable of running experiments autonomously. How should a state science and technology department revise its grant evaluation and IP ownership frameworks?",
+      fu:"",
+      a:`<strong>Grant evaluation revisions:</strong>
+<ul><li>Require disclosure of AI tools used in research proposals and outputs — analogous to declaring conflicts of interest. This creates a factual record, not a prohibition.</li><li>Evaluate proposals on the quality of the <em>research question and experimental design</em> rather than volume of preliminary data — since AI can generate preliminary data rapidly, making it a poor quality signal for human scientific judgment.</li><li>Include "responsible AI use" as a criterion: does the proposal describe how AI-generated hypotheses will be validated by independent experimental methods? Does it describe guardrails against AI hallucination in literature review?</li></ul><strong>IP ownership framework:</strong>
+<ul><li>Current Indian patent and copyright law do not recognize AI as an inventor or author. State-funded research must therefore attribute all IP to human researchers — but grant agreements should explicitly state that AI tool usage must be disclosed and does not affect researcher ownership provided the inventive concept was human-directed.</li><li>For research producing datasets generated primarily by AI, institute a "data commons" default — AI-generated data from publicly-funded research should be openly published unless there is specific national security or commercial justification.</li><li>Advocate nationally for a "human-in-the-loop" IP standard: inventions where AI played a substantial role require a named human "creative director" who takes responsibility for the inventive direction.</li></ul>`
+    },
+    {
+      n:"Q34", diff:"hard", tags:["National Mission","Quantum"],
+      q:"India's National Quantum Mission targets quantum leadership by 2031. As a state technology advisor, how would you align your state's academic and industrial ecosystem with this national mission?",
+      fu:"",
+      a:`India's NQM (₹6,000 crore, 2023–2031) targets 50–1000 physical qubit computers, quantum communication over 2000km, quantum sensing devices, and quantum-ready industrial processes. State alignment requires playing to specific state strengths:<br><br><strong>For states with strong IITs/NITs:</strong>
+<ul><li>Designate one institution as the state's "Quantum Hub" with ring-fenced funding for shared equipment — dilution refrigerators, optical benches, cleanroom access — accessible to industry partners</li><li>Create a state quantum fellowship: 50 PhD fellowships per year with a quantum focus, supplementing NQM's national fellowships</li><li>Establish a state-NQM coordination cell that actively matches Technology Hubs' challenges with local industry and academic capabilities</li></ul><strong>For states with industrial clusters:</strong>
+<ul><li>Identify 3–5 industries (pharma, chemicals, logistics, finance) most likely to be early quantum adopters and fund "quantum readiness" programs — translating NQM hardware progress into business-relevant problem formulations</li><li>Host quantum hackathons co-sponsored with NQM Technology Hubs to build a talent pipeline oriented toward commercial applications</li></ul>The biggest leverage point for any state is <strong>talent production</strong> — every quantum PhD and masters graduate is a contribution to the national mission regardless of where they work.`
+    },
+    {
+      n:"Q35", diff:"hard", tags:["Sovereign AI","National Security"],
+      q:"Describe the concept of \"sovereign AI\" — the ability to develop and govern AI using domestic infrastructure, data, and talent. How important is this for India, and what is a state government's role in building toward it?",
+      fu:"",
+      a:`<strong>Sovereign AI</strong> refers to a nation's capacity to develop, deploy, and regulate AI systems using its own data, compute infrastructure, talent, and legal frameworks — without critical dependence on foreign-controlled technology stacks. It is analogous to energy sovereignty: not necessarily full autarky, but strategic sufficiency to avoid coercive dependency.<br><br><strong>Why it is critical for India:</strong>
+<ul><li><strong>Data sovereignty:</strong> If India's health, agricultural, judicial, and financial data is processed by foreign AI systems under foreign jurisdiction, that data becomes a geopolitical asset for those nations.</li><li><strong>Model alignment:</strong> AI systems trained primarily on Western data encode Western cultural assumptions, legal frameworks, and social norms. A sovereign India needs AI models that understand Indian languages, laws, agricultural conditions, and social contexts natively.</li><li><strong>Critical infrastructure risk:</strong> Dependence on foreign AI for power grid optimization, defense systems, or financial infrastructure creates a strategic vulnerability — APIs can be shut off, models can be updated to introduce biases, and access can be conditioned on political compliance.</li></ul><strong>State government's role:</strong>
+<ul><li>Generate and curate high-quality, consent-compliant state data assets that can feed domestic AI model training</li><li>Mandate that all state government AI systems use domestic cloud infrastructure or certified sovereign cloud providers (per MeitY guidelines)</li><li>Invest in open-source regional language models — Indic AI — as digital public goods</li><li>Build the talent layer: the ultimate sovereign AI asset is Indian AI researchers who understand Indian needs and have the skills to build for them</li></ul>`
+    },
+    {
+      n:"Q36", diff:"hard", tags:["Gov-Tech Procurement","Due Diligence"],
+      q:"A startup claims their AI system can predict crop failures with 94% accuracy and flood zones with 88% accuracy using satellite imagery. How do you evaluate this claim before recommending state adoption?",
+      fu:"",
+      a:`A structured due diligence process across five dimensions:
+<ul><li><strong>Statistical interrogation:</strong> "94% accuracy" is meaningless without knowing the baseline rate. If only 3% of crops fail in a given year, a model that always predicts "no failure" achieves 97% accuracy. Ask for precision, recall, F1 score, and confusion matrices broken down by crop type, season, and geography. Ask specifically: what is the false negative rate (missed failures) and false positive rate (false alarms), and what are the costs of each type of error?</li><li><strong>Validation methodology:</strong> Was accuracy measured on held-out test data? On data from the same districts where the model will be deployed? Temporal validation — does the model trained on 2018–2022 data accurately predict 2023–2024 events?</li><li><strong>Independent replication:</strong> Request that the model be tested on a dataset the startup has never seen — ideally historical state agricultural and satellite data curated internally. Retain an independent technical evaluator (IIT/ICRISAT) to run this validation, not the startup itself.</li><li><strong>Explainability audit:</strong> Can the model explain why it made a specific prediction in terms that an agronomist can validate? Black-box predictions in high-stakes government applications are a governance risk.</li><li><strong>Pilot before scale:</strong> No full state rollout before a 2-season, 3-district pilot with clear performance benchmarks defined in advance: what performance level triggers continued rollout versus contract termination?</li></ul>`
+    },
+    {
+      n:"Q37", diff:"hard", tags:["Geopolitics","Compute Strategy"],
+      q:"What is \"compute sovereignty\" and how does India's reliance on US and Taiwanese GPU supply chains affect its long-term AI ambitions?",
+      fu:"",
+      a:`<strong>Compute sovereignty</strong> is the ability to train and run AI models on domestically controlled or accessible hardware, without being subject to foreign export controls, supply chain disruptions, or pricing leverage.<br><br>India's current vulnerability: approximately 90% of advanced AI chips (NVIDIA H100/H200, AMD MI300) are manufactured by TSMC in Taiwan, with design IP controlled by US companies. This creates two risks:
+<ul><li><strong>Export control risk:</strong> The US has progressively tightened chip export controls. India received an exemption in recent rounds, but this is a policy choice, not a structural guarantee — and controls can be modified at any time based on US foreign policy.</li><li><strong>Taiwan geopolitical risk:</strong> Any military conflict or blockade in the Taiwan Strait would immediately and catastrophically disrupt global GPU supply. India's AI-dependent critical systems would be severely constrained within weeks.</li></ul><strong>Mitigation strategies:</strong>
+<ul><li>India's semiconductor mission (fab investments in Gujarat) is the long-term answer, but advanced logic chips are a decade away domestically</li><li>Near-term: build strategic GPU reserves — similar to oil strategic reserves — through government procurement of sufficient compute for essential national AI systems</li><li>Invest in software efficiency: models that run on less compute (quantization, distillation, efficient architectures) reduce hardware dependency</li><li>Diversify to EU/Japanese chip vendors for non-frontier applications to reduce concentration risk</li></ul>`
+    },
+    {
+      n:"Q38", diff:"hard", tags:["Workforce Policy","Skill Development"],
+      q:"The \"re-skilling\" wave is restructuring tech workforces globally. How should a state government's skill development authority ensure the workforce is prepared for AI-augmented work — not displaced by it — within 3 years?",
+      fu:"",
+      a:`A 3-year horizon requires simultaneous action across multiple groups — not sequential programs:
+<ul><li><strong>AI literacy for all white-collar government workers (Year 1):</strong> Every state government employee in administrative, financial, and service delivery roles should complete a mandatory 20-hour "AI tools for work" program — covering prompt engineering basics, identifying AI errors, using AI-assisted drafting and data analysis tools. This creates immediate productivity dividends and builds an informed constituency for responsible AI deployment.</li><li><strong>Technical upskilling for ITI and polytechnic graduates (Years 1–2):</strong> Add AI/ML fundamentals, data annotation, model evaluation, and robotic process automation modules to existing vocational curricula. These are the workers most at risk of displacement and fastest to retrain if the curriculum is practical and job-market-linked.</li><li><strong>Industry-linked AI specialist programs (Years 2–3):</strong> Partner with industry clusters to define specific AI role requirements (prompt engineer, AI quality analyst, AI-augmented process manager) and reverse-engineer targeted 6-month certification programs. Industry partners co-develop curriculum and guarantee interviews — not just "training for training's sake."</li><li><strong>Early warning system:</strong> Establish a State Labour-AI Observatory that tracks automation investment and workforce changes quarterly — providing the skill development authority with 12–18 months advance notice of where displacement is likely to accelerate, enabling proactive rather than reactive retraining programs.</li></ul>`
+    },
+    {
+      n:"Q39", diff:"medium", tags:["Space Policy","Risk"],
+      q:"Space debris has become a critical issue as satellite constellations scale. How does this affect state-level dependencies on satellite-based services — GPS, weather, connectivity — and what contingency planning is needed?",
+      fu:"",
+      a:`State governments are deeply dependent on satellite services that most officials consider invisible background infrastructure:<br><br><strong>Dependencies at risk:</strong>
+<ul><li><strong>GPS:</strong> Precision agriculture, emergency response vehicle routing, infrastructure surveying, and logistics all depend on GNSS. A major debris event or deliberate GPS jamming would immediately paralyze systems built without terrestrial fallback.</li><li><strong>Weather satellites:</strong> IMD's Insat constellation provides the data backbone for cyclone warnings, flood forecasting, and monsoon prediction. Debris damage to even one key satellite would degrade prediction accuracy — with direct consequences for agricultural planning and disaster preparedness.</li><li><strong>Connectivity:</strong> Growing reliance on VSAT and LEO constellations (Starlink, OneWeb) for last-mile connectivity in remote areas — any constellation disruption from a Kessler cascade event could leave health centers, schools, and emergency services offline.</li></ul><strong>Contingency planning actions:</strong>
+<ul><li>Audit critical state services for satellite dependency and identify terrestrial backup options for each</li><li>Participate in ISRO's space situational awareness programs — early debris conjunction warnings allow system operators to prepare</li><li>For critical communications, maintain fiber/microwave terrestrial backup for services currently routed via satellite</li><li>Advocate for India-specific Positioning system investment (NavIC expansion) as a GPS independence hedge</li></ul>`
+    },
+    {
+      n:"Q40", diff:"medium", tags:["Blockchain","Gov-Tech"],
+      q:"Blockchain and distributed ledger technologies have had a mixed track record in government applications. In your assessment, where do they genuinely add value versus where are they overhyped?",
+      fu:"",
+      a:`Blockchain offers genuine value in a narrow set of government use cases — and is dramatically overhyped in most others. The honest framework: <strong>blockchain adds value when you need decentralized, trustless verification among parties who don't trust each other, and when immutability of records is more important than the ability to correct errors.</strong><br><br><strong>Genuine value:</strong>
+<ul><li><strong>Cross-border document verification:</strong> Academic certificates, land title claims, and medical records that need verification across jurisdictions without a central trusted authority — blockchain provides a shared ledger that multiple governments can query without depending on any one party.</li><li><strong>Supply chain provenance:</strong> Tracking agricultural produce from farm to consumer — particularly where multiple parties need to record transfers in a tamper-evident way.</li><li><strong>Carbon credit registries:</strong> Multi-party verification of emission reductions where trust among participants is genuinely contested.</li></ul><strong>Overhyped / poor fit:</strong>
+<ul><li><strong>Land records:</strong> Widely piloted, almost universally disappointing. The problem isn't record integrity — it's that the data entering the blockchain is itself disputed or fraudulently recorded. "Garbage in, garbage out" on an immutable ledger is worse than garbage in a correctable database.</li><li><strong>Internal government workflows:</strong> When all parties are under the same government authority, a trusted central database is simpler, cheaper, faster, and more maintainable than a blockchain. The "trustless" value proposition is irrelevant when trust is already established by institutional authority.</li></ul>`
+    },
+    {
+      n:"Q41", diff:"hard", tags:["Climate Tech","Disaster Management"],
+      q:"Climate modeling has advanced significantly with AI. How could a state's disaster management authority use AI-driven climate models for proactive planning, resource pre-positioning, and real-time response?",
+      fu:"",
+      a:`AI has transformed climate modeling from computationally expensive general circulation models to fast, high-resolution nowcasting and downscaling systems. Google's GraphCast and Huawei's Pangu-Weather can generate 10-day global forecasts in under a minute — previously requiring hours of supercomputer time.<br><br><strong>Proactive planning (90-day seasonal outlook):</strong> AI-downscaled seasonal forecasts give district-level monsoon probability distributions. A SDMA can use these to pre-position pumping stations in flood-prone districts, issue advance crop advisories to buffer expected drought-stress periods, and pre-plan evacuation routes before the monsoon season begins.<br><br><strong>Resource pre-positioning (5–10 day window):</strong> When cyclone or flood probability exceeds a threshold, an AI-integrated decision system automatically triggers procurement of relief materials, notifies NDRF units, and generates tentative resource allocation across districts weighted by predicted impact severity — cutting 48–72 hours from current reactive mobilization timelines.<br><br><strong>Real-time response (operational):</strong> During an active event, AI integrates satellite imagery, river gauge data, rainfall radar, and social media distress signals into a unified situational awareness dashboard. Helicopter rescue routing, bridge load assessments, and population density overlays enable optimal rescue prioritization.<br><br>Implementation requires the SDMA to invest in a <strong>Unified Data Integration Platform</strong> — connecting IMD feeds, ISRO satellite data, river gauge telemetry, and population data into a single operational system with 24/7 technical support.`
+    },
+    {
+      n:"Q42", diff:"hard", tags:["Communication","Leadership","Advocacy"],
+      q:"You are the only technology voice in a room of senior bureaucrats and politicians skeptical of AI. Make the case — in under two minutes, in plain language — for why this state must invest in AI infrastructure in the next budget cycle.",
+      fu:"",
+      a:`"Members of this panel, I understand the skepticism. We've heard technology promises before that didn't deliver. So let me not talk about technology at all. Let me talk about three problems you already know are real.<br><br><strong>Problem one: our government is slow.</strong> A citizen applying for a birth certificate, a land mutation, a ration card — it takes weeks. Not because our officers are lazy — they're overwhelmed. Today, AI can handle 80% of routine document processing, grievance routing, and status communication without any human intervention, freeing our officers for the 20% that actually requires judgment. States that have deployed this are processing 3x the volume of citizen requests with the same staff.<br><br><strong>Problem two: our farmers are flying blind.</strong> When a pest outbreak hits, our extension officer finds out three weeks later — after the crop is already damaged. Today, satellite-based AI monitoring can detect stress signatures in crops 2–3 weeks before visible symptoms. For every ₹1 spent on this advisory, farmers recover ₹8–12 in prevented losses. That's not a technology investment — that's an agricultural income investment.<br><br><strong>Problem three: our money is leaking.</strong> Duplicate beneficiaries, ghost contractors, and inflated procurement costs drain an estimated 15–20% of welfare budgets. AI-based pattern detection in government financial data finds these anomalies before they become audit observations.<br><br>I'm not asking you to trust AI. I'm asking you to fix three problems you've been trying to solve for twenty years. AI is the most powerful tool available to do it. The question is not whether to invest — it's whether we invest now and lead, or wait until we're buying solutions from states that got ahead of us."`
+    }
+  ]
+};
+
+function buildCard(item) {
+  const diffClass = item.diff || 'medium';
+  const tagsHtml = item.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  const fuHtml = item.fu ? `<p class="q-followup">${item.fu}</p>` : '';
+  const fuAnsHtml = item.fa ? `<div class="q-answer-followup"><strong>Follow-up Answer:</strong> ${item.fa}</div>` : '';
+  return `
+    <div class="q-card">
+      <div class="q-card-top">
+        <div class="q-num">${item.n}</div>
+        <div class="q-body">
+          <div class="q-header-row">
+            <p class="q-text">${item.q}</p>
+            <div class="q-toggle"></div>
+          </div>
+          <div class="q-tags"><span class="tag ${diffClass}">${diffClass.charAt(0).toUpperCase()+diffClass.slice(1)}</span>${tagsHtml}</div>
+          ${fuHtml}
+        </div>
+      </div>
+      <div class="q-answer-wrap"><div class="q-answer-inner"><div class="q-answer">
+        <span class="q-answer-label">Model Answer</span>
+        <div class="q-answer-text">${item.a}${fuAnsHtml}</div>
+      </div></div></div>
+    </div>`;
+}
+
+Object.keys(QA).forEach(sectionId => {
+  const container = document.getElementById(sectionId);
+  if (container) {
+    container.innerHTML = QA[sectionId].map(buildCard).join('');
+  }
+});
+
+document.addEventListener('click', e => {
+  const top = e.target.closest('.q-card-top');
+  if (!top) return;
+  const card = top.closest('.q-card');
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.q-card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) {
+    card.classList.add('open');
+    setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+});
+</script>
+</body>
+</html>
